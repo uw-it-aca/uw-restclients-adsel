@@ -1,0 +1,4 @@
+[run]
+branch = True
+source = uw_adsel
+include = uw_adsel/*
