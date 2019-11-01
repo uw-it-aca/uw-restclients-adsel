@@ -16,7 +16,6 @@ after_script:
 - coveralls
 before_deploy:
 - find uw_adsel/ -name \*.pyc -exec rm {} \;
-- echo $TRAVIS_TAG > uw_adsel/VERSION
 deploy:
   provider: pypi
   user: uw-it-aca
