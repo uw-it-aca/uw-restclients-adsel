@@ -24,7 +24,7 @@ setup(
     include_package_data=True,
     install_requires=['UW-RestClients-Core>1.0,<2.0',
                       'mock',
-                      'dateparser'
+                      'python-dateutil'
                      ],
     license='Apache License, Version 2.0',
     description=('A library for connecting to the AdSel API at the University'

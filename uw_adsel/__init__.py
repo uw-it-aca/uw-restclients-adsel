@@ -6,7 +6,8 @@ import json
 import logging
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.models import Major
+from uw_adsel.models import Major, Quarter
+import dateutil.parser
 
 
 logger = logging.getLogger(__name__)
@@ -23,6 +24,25 @@ class AdSel(object):
 
     def __init__(self, config={}):
         self.DAO = ADSEL_DAO()
+
+    def get_quarters(self, **kwargs):
+        url = "{}/academicqtr".format(self.API)
+        response = self._get_resource(url)
+        quarters = self._quarters_from_json(response)
+        return quarters
+
+    def _quarters_from_json(self, response):
+        quarters = []
+        for quarter in response:
+            qtr = Quarter()
+            qtr.id = quarter["academicQtrKeyId"]
+            qtr.begin = dateutil.parser.parse(quarter["activeQtrBeginDttm"])
+            qtr.end = dateutil.parser.parse(quarter["activeQtrEndDttm"])
+            qtr.active_ind = quarter["activeInd"]
+            qtr.appl_yr = quarter["appl_yr"]
+            qtr.appl_qtr = quarter["appl_qtr"]
+            quarters.append(qtr)
+        return quarters
 
     def get_majors(self, **kwargs):
         url = "{}/majors".format(self.API)
