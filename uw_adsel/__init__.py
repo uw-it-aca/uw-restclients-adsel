@@ -1,12 +1,12 @@
 """
-This is the interface for interacting with the Group Web Service.
+This is the interface for interacting with the AdSel Web Service.
 """
 
 import json
 import logging
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.models import Major, Quarter
+from uw_adsel.models import Major, Cohort, Quarter
 import dateutil.parser
 
 
@@ -43,6 +43,41 @@ class AdSel(object):
             qtr.appl_qtr = quarter["appl_qtr"]
             quarters.append(qtr)
         return quarters
+
+    def get_cohorts_by_qtr(self, quarter_id, **kwargs):
+        url = "{}/cohorts/{}".format(self.API, quarter_id)
+        response = self._get_resource(url)
+        cohorts = self._cohorts_from_json(response)
+        # TODO Confirm how pagination will work
+        if response['totalCount'] > 1:
+            cohort_page = 2
+            while cohort_page <= response['totalCount']:
+                page_cohorts = self.get_cohorts_by_qtr_page(quarter_id,
+                                                            cohort_page)
+                cohorts.extend(page_cohorts)
+                cohort_page += 1
+        return cohorts
+
+    def get_cohorts_by_qtr_page(self, quarter_id, page, **kwargs):
+        url = "{}/cohorts/{}?Page={}".format(self.API, quarter_id, page)
+        response = self._get_resource(url)
+        cohorts = self._cohorts_from_json(response)
+        return cohorts
+
+    def _cohorts_from_json(self, response):
+        cohorts = []
+        for cohort in response['cohorts']:
+            cohort_model = Cohort()
+            cohort_model.academic_qtr_id = cohort['academicQtrKeyId']
+            cohort_model.cohort_number = cohort['cohortNbr']
+            cohort_model.cohort_description = cohort['cohortDescription']
+            cohort_model.cohort_residency = cohort['cohortResidency']
+            cohort_model.admit_decision = cohort['admitDecision']
+            cohort_model.protected_group = cohort['protectedGroupInd']
+            cohort_model.active_cohort = cohort['activeCohortInd']
+            cohort_model.assigned_count = cohort['assignedCount']
+            cohorts.append(cohort_model)
+        return cohorts
 
     def get_majors(self, **kwargs):
         url = "{}/majors".format(self.API)

@@ -8,6 +8,17 @@ class Major(models.Model):
     display_name = models.CharField(max_length=255)
 
 
+class Cohort(models.Model):
+    academic_qtr_id = models.IntegerField()
+    cohort_number = models.IntegerField()
+    cohort_description = models.TextField()
+    cohort_residency = models.CharField(max_length=255)
+    admit_decision = models.CharField(max_length=255)
+    protected_group = models.BooleanField()
+    active_cohort = models.BooleanField()
+    assigned_count = models.IntegerField()
+
+
 class Quarter(models.Model):
     id = models.IntegerField()
     begin = models.DateTimeField()

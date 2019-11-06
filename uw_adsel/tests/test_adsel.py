@@ -25,3 +25,8 @@ class AdselTest(TestCase):
         quarters = self.adsel.get_quarters()
         self.assertEqual(len(quarters), 2)
         self.assertEqual(quarters[0].begin, datetime(2019, 11, 5, 0, 0, 0))
+
+    def test_get_cohorts(self):
+        cohorts = self.adsel.get_cohorts_by_qtr(0)
+        self.assertEqual(len(cohorts), 4)
+        self.assertEqual(cohorts[2].cohort_description, "Second Page Cohort")
