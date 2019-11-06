@@ -17,9 +17,11 @@ class AdselTest(TestCase):
             self.adsel._get_resource("/foobar/")
 
     def test_get_majors(self):
-        majors = self.adsel.get_majors(0)
+        majors = self.adsel.get_majors_by_qtr(0)
         self.assertEqual(len(majors), 4)
         self.assertEqual(majors[2].major_abbr, "CSE")
+        majors_unpaginated = self.adsel.get_majors_by_qtr(1)
+        self.assertEqual(len(majors_unpaginated), 2)
 
     def test_get_quarters(self):
         quarters = self.adsel.get_quarters()
@@ -30,3 +32,5 @@ class AdselTest(TestCase):
         cohorts = self.adsel.get_cohorts_by_qtr(0)
         self.assertEqual(len(cohorts), 4)
         self.assertEqual(cohorts[2].cohort_description, "Second Page Cohort")
+        cohorts_unpaginated = self.adsel.get_cohorts_by_qtr(1)
+        self.assertEqual(len(cohorts_unpaginated), 2)

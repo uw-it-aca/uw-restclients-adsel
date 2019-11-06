@@ -79,7 +79,7 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
-    def get_majors(self, quarter_id, **kwargs):
+    def get_majors_by_qtr(self, quarter_id, **kwargs):
         url = "{}/majors/details/{}".format(self.API, quarter_id)
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
