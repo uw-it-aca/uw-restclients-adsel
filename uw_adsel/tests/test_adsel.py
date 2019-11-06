@@ -17,9 +17,9 @@ class AdselTest(TestCase):
             self.adsel._get_resource("/foobar/")
 
     def test_get_majors(self):
-        majors = self.adsel.get_majors()
-        self.assertEqual(len(majors), 2)
-        self.assertEqual(majors[0].major_abbr, "BIOL")
+        majors = self.adsel.get_majors(0)
+        self.assertEqual(len(majors), 4)
+        self.assertEqual(majors[2].major_abbr, "CSE")
 
     def test_get_quarters(self):
         quarters = self.adsel.get_quarters()

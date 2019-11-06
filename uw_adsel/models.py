@@ -3,9 +3,13 @@ from restclients_core import models
 
 class Major(models.Model):
     major_abbr = models.CharField(max_length=32)
-    begin_academic_qtr_key_id = models.IntegerField()
+    academic_qtr_key_id = models.IntegerField()
     major_pathway = models.IntegerField()
     display_name = models.CharField(max_length=255)
+    college = models.CharField(max_length=255)
+    division = models.CharField(max_length=255)
+    dtx = models.CharField(max_length=255)
+    assigned_count = models.IntegerField()
 
 
 class Cohort(models.Model):

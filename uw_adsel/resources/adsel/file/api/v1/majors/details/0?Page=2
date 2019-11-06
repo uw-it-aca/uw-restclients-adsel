@@ -1,0 +1,26 @@
+{
+	"majors": [{
+			"majorAbbr": "CSE",
+			"academicQtrKeyId": 0,
+			"displayName": "Comp Sci Eng",
+			"college": "Engineering",
+			"division": "A4C",
+			"majorPathway": 0,
+			"dtx": "string",
+			"assignedCount": 32
+		},
+		{
+			"majorAbbr": "CHEM",
+			"academicQtrKeyId": 0,
+			"displayName": "Chemistry",
+			"college": "Science",
+			"division": "32D2",
+			"majorPathway": 0,
+			"dtx": "string",
+			"assignedCount": 0
+		}
+	],
+	"nextPage": "2",
+	"previousPage": "2",
+	"totalCount": 2
+}

@@ -79,21 +79,39 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
-    def get_majors(self, **kwargs):
-        url = "{}/majors".format(self.API)
+    def get_majors(self, quarter_id, **kwargs):
+        url = "{}/majors/details/{}".format(self.API, quarter_id)
+        response = self._get_resource(url)
+        majors = self._majors_from_json(response)
+        # TODO Confirm how pagination will work
+        if response['totalCount'] > 1:
+            major_page = 2
+            while major_page <= response['totalCount']:
+                page_majors = self.get_majors_by_qtr_page(quarter_id,
+                                                          major_page)
+                majors.extend(page_majors)
+                major_page += 1
+        return majors
+
+    def get_majors_by_qtr_page(self, quarter_id, page, **kwargs):
+        url = "{}/majors/details/{}?Page={}".format(self.API, quarter_id, page)
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
         return majors
 
     def _majors_from_json(self, response):
         majors = []
-        for major_data in response:
+        for major_data in response['majors']:
             major = Major()
             major.major_abbr = major_data['majorAbbr']
-            major.begin_academic_qtr_key_id = \
-                major_data['beginAcademicQtrKeyId']
+            major.academic_qtr_key_id = major_data['academicQtrKeyId']
             major.major_pathway = major_data['majorPathway']
             major.display_name = major_data['displayName']
+            major.college = major_data['college']
+            major.division = major_data['division']
+            major.dtx = major_data['dtx']
+            major.assigned_count = major_data['assignedCount']
+
             majors.append(major)
         return majors
 
