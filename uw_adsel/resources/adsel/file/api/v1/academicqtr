@@ -8,7 +8,7 @@
     "appl_qtr": "autumn"
   },
   {
-    "academicQtrKeyId": 0,
+    "academicQtrKeyId": 1,
     "activeQtrBeginDttm": "2019-12-26T00:00:00",
     "activeQtrEndDttm": "2020-03-05T00:00:00",
     "activeInd": "string",

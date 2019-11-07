@@ -8,6 +8,7 @@ from restclients_core.exceptions import DataFailureException
 from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter
 import dateutil.parser
+from datetime import datetime
 
 
 logger = logging.getLogger(__name__)
@@ -31,6 +32,9 @@ class AdSel(object):
         quarters = self._quarters_from_json(response)
         return quarters
 
+    def get_now(self):
+        return datetime.now()
+
     def _quarters_from_json(self, response):
         quarters = []
         for quarter in response:
@@ -41,6 +45,7 @@ class AdSel(object):
             qtr.active_ind = quarter["activeInd"]
             qtr.appl_yr = quarter["appl_yr"]
             qtr.appl_qtr = quarter["appl_qtr"]
+            qtr.is_current = (qtr.begin < self.get_now() < qtr.end)
             quarters.append(qtr)
         return quarters
 

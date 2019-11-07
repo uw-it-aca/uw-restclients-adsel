@@ -30,3 +30,4 @@ class Quarter(models.Model):
     active_ind = models.CharField(max_length=32)
     appl_yr = models.CharField(max_length=4)
     appl_qtr = models.CharField(max_length=1)
+    is_current = models.BooleanField()
