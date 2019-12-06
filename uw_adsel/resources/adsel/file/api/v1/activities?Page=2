@@ -1,0 +1,18 @@
+{
+  "decisions": [
+    {
+      "assignmentMadeOn": "2019-11-14T13:44:49.494Z",
+      "comment": "reworking this cohort",
+      "assignmentMadeBy": "javerage",
+      "assignmentType": "Type 1",
+      "cohortNbr": 42,
+      "majorAbbr": "",
+      "majorProgramCode": "",
+      "totalSubmitted": 81,
+      "totalAssigned": 59
+    }
+  ],
+  "nextPage": "2",
+  "previousPage": "2",
+  "totalCount": 2
+}

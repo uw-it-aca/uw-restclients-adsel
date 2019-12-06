@@ -6,7 +6,7 @@ import json
 import logging
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.models import Major, Cohort, Quarter
+from uw_adsel.models import Major, Cohort, Quarter, Activity, Application
 import dateutil.parser
 from datetime import datetime
 
@@ -48,6 +48,63 @@ class AdSel(object):
             qtr.is_current = (qtr.begin < self.get_now() < qtr.end)
             quarters.append(qtr)
         return quarters
+
+    def get_applications_by_qtr_syskey(self, quarter_id, syskey):
+        url = "{}/applications/{}/{}".format(self.API, quarter_id, syskey)
+        response = self._get_resource(url)
+        application = self._get_applications_from_json(response)
+        return application
+
+    def _get_applications_from_json(self, response):
+        applications = []
+        for app in response:
+            application = Application()
+            application.adsel_id = app['admissionsSelectionId']
+            application.application_number = app['applicationNbr']
+            application.system_key = app['systemKey']
+            application.campus = app['campus']
+            application.quarter_id = app['academicQtrKeyId']
+            application.assigned_cohort = app['assignedCohort']
+            application.assigned_major = app['assignedMajor']
+            applications.append(application)
+        return applications
+
+    def get_activities(self, **kwargs):
+        url = "{}/activities".format(self.API)
+        response = self._get_resource(url)
+        activities = self._activities_from_json(response)
+        # TODO Confirm how pagination will work
+        if response['totalCount'] > 1:
+            activity_page = 2
+            while activity_page <= response['totalCount']:
+                page_activities = self.get_activities_by_page(
+                    activity_page)
+                activities.extend(page_activities)
+                activity_page += 1
+        return activities
+
+    def get_activities_by_page(self, page, **kwargs):
+        url = "{}/activities?Page={}".format(self.API, page)
+        response = self._get_resource(url)
+        activities = self._activities_from_json(response)
+        return activities
+
+    def _activities_from_json(self, response):
+        activities = []
+        for activity in response['decisions']:
+            acty = Activity()
+            acty.assignment_date = \
+                dateutil.parser.parse(activity['assignmentMadeOn'])
+            acty.comment = activity['comment']
+            acty.user = activity['assignmentMadeBy']
+            acty.assignment_type = activity['assignmentType']
+            acty.cohort_number = activity['cohortNbr']
+            acty.major_abbr = activity['majorAbbr']
+            acty.major_program_code = activity['majorProgramCode']
+            acty.total_submitted = activity['totalSubmitted']
+            acty.total_assigned = activity['totalAssigned']
+            activities.append(acty)
+        return activities
 
     def get_cohorts_by_qtr(self, quarter_id, **kwargs):
         url = "{}/cohorts/{}".format(self.API, quarter_id)
