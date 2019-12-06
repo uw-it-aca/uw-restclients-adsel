@@ -31,3 +31,15 @@ class Quarter(models.Model):
     appl_yr = models.CharField(max_length=4)
     appl_qtr = models.CharField(max_length=1)
     is_current = models.BooleanField()
+
+
+class Activity(models.Model):
+    assignment_date = models.DateTimeField()
+    comment = models.TextField()
+    user = models.CharField(max_length=12)
+    assignment_type = models.TextField()
+    cohort_number = models.IntegerField()
+    major_abbr = models.CharField(max_length=32)
+    major_program_code = models.CharField(max_length=32)
+    total_submitted = models.IntegerField()
+    total_assigned = models.IntegerField()

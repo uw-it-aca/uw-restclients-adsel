@@ -1,4 +1,4 @@
 from commonconf import override_settings
 
 
-fdao_zoom_override = override_settings(RESTCLIENTS_ZOOM_DAO_CLASS='Mock')
+fdao_adsel_override = override_settings(RESTCLIENTS_ADSEL_DAO_CLASS='Mock')

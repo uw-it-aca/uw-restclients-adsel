@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 from restclients_core.exceptions import DataFailureException
-from uw_adsel.utilities import fdao_zoom_override
+from uw_adsel.utilities import fdao_adsel_override
 from uw_adsel import AdSel
 from datetime import datetime
 
@@ -46,3 +46,8 @@ class AdselTest(TestCase):
     def test_get_now(self, mock_obj):
         self.assertEqual(self.adsel.get_now(),
                          datetime(2019, 11, 12, 0, 10, 21))
+
+    def test_get_activities(self):
+        activities = self.adsel.get_activities()
+        self.assertEqual(len(activities), 5)
+        self.assertEqual(activities[0].user, "javerage")
