@@ -51,3 +51,8 @@ class AdselTest(TestCase):
         activities = self.adsel.get_activities()
         self.assertEqual(len(activities), 5)
         self.assertEqual(activities[0].user, "javerage")
+
+    def test_get_application(self):
+        applications = self.adsel.get_applications_by_qtr_syskey(0, 123)
+        self.assertEqual(len(applications), 4)
+        self.assertEqual(applications[0].adsel_id, 1)

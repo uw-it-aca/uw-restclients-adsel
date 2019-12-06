@@ -6,7 +6,7 @@ import json
 import logging
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.models import Major, Cohort, Quarter, Activity
+from uw_adsel.models import Major, Cohort, Quarter, Activity, Application
 import dateutil.parser
 from datetime import datetime
 
@@ -48,6 +48,26 @@ class AdSel(object):
             qtr.is_current = (qtr.begin < self.get_now() < qtr.end)
             quarters.append(qtr)
         return quarters
+
+    def get_applications_by_qtr_syskey(self, quarter_id, syskey):
+        url = "{}/applications/{}/{}".format(self.API, quarter_id, syskey)
+        response = self._get_resource(url)
+        application = self._get_applications_from_json(response)
+        return application
+
+    def _get_applications_from_json(self, response):
+        applications = []
+        for app in response:
+            application = Application()
+            application.adsel_id = app['admissionsSelectionId']
+            application.application_number = app['applicationNbr']
+            application.system_key = app['systemKey']
+            application.campus = app['campus']
+            application.quarter_id = app['academicQtrKeyId']
+            application.assigned_cohort = app['assignedCohort']
+            application.assigned_major = app['assignedMajor']
+            applications.append(application)
+        return applications
 
     def get_activities(self, **kwargs):
         url = "{}/activities".format(self.API)

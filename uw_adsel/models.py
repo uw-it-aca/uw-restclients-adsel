@@ -43,3 +43,13 @@ class Activity(models.Model):
     major_program_code = models.CharField(max_length=32)
     total_submitted = models.IntegerField()
     total_assigned = models.IntegerField()
+
+
+class Application(models.Model):
+    adsel_id = models.IntegerField()
+    application_number = models.IntegerField()
+    system_key = models.IntegerField()
+    campus = models.IntegerField()
+    quarter_id = models.IntegerField()
+    assigned_cohort = models.IntegerField()
+    assigned_major = models.CharField(max_length=32)
