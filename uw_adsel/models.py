@@ -53,3 +53,55 @@ class Application(models.Model):
     quarter_id = models.IntegerField()
     assigned_cohort = models.IntegerField()
     assigned_major = models.CharField(max_length=32)
+
+    def json_data(self):
+        return {'admissionSelectionId': self.adsel_id,
+                'aplicationNbr': self.application_number,
+                'systemKey': self.system_key}
+
+
+class Assignment(models.Model):
+    assignment_type = models.CharField()
+    quarter = models.IntegerField()
+    campus = models.IntegerField()
+    comments = models.TextField()
+    user = models.CharField(max_length=12)
+    applicants = []
+
+
+class CohortAssignment(Assignment):
+    cohort_number = models.IntegerField()
+    override_previous = models.BooleanField()
+    override_protected = models.BooleanField()
+
+    def json_data(self):
+        applicant_json = []
+        for application in self.applicants:
+            applicant_json.append(application.json_data())
+        return {'applicants': applicant_json,
+                'cohortNbr': self.cohort_number,
+                'overridePreviousCohort': self.override_previous,
+                'overridePreviousProtectedCohort': self.override_protected,
+                'assignmentDetail': {'assignmentType': self.assignment_type,
+                                     'academicQtrKeyId': self.quarter,
+                                     'campus': self.campus,
+                                     'comments': self.comments,
+                                     'decisionImportUser': self.user}
+                }
+
+
+class MajorAssignment(Assignment):
+    major_code = models.IntegerField()
+
+    def json_data(self):
+        applicant_json = []
+        for application in self.applicants:
+            applicant_json.append(application.json_data())
+        return {'applicants': applicant_json,
+                'majorProgramCode': self.major_code,
+                'assignmentDetail': {'assignmentType': self.assignment_type,
+                                     'academicQtrKeyId': self.quarter,
+                                     'campus': self.campus,
+                                     'comments': self.comments,
+                                     'decisionImportUser': self.user}
+                }

@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 # max page size 300
 PAGE_SIZE = 300
+MAJOR_TYPE = "major"
+COHORT_TYPE = "cohort"
 
 
 class AdSel(object):
@@ -25,6 +27,18 @@ class AdSel(object):
 
     def __init__(self, config={}):
         self.DAO = ADSEL_DAO()
+
+    def assign_majors(self, major_assignment):
+        url = "{}/assignments/major".format(self.API)
+        request = major_assignment.json_data()
+        response = self._post_resource(url, request)
+        return response
+
+    def assign_cohorts(self, cohort_assignment):
+        url = "{}/assignments/cohort".format(self.API)
+        request = cohort_assignment.json_data()
+        response = self._post_resource(url, request)
+        return response
 
     def get_quarters(self, **kwargs):
         url = "{}/academicqtr".format(self.API)
@@ -179,6 +193,15 @@ class AdSel(object):
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())
+
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+
+        return json.loads(response.data)
+
+    def _post_resource(self, url, request):
+        response = self.DAO.postURL(url, self._headers(), body=request)
 
         if response.status != 200:
             self._log_error(url, response)

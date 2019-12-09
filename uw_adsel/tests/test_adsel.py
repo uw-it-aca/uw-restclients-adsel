@@ -2,6 +2,7 @@ from unittest import TestCase, mock
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.utilities import fdao_adsel_override
 from uw_adsel import AdSel
+from uw_adsel.models import CohortAssignment, MajorAssignment, Application
 from datetime import datetime
 
 
@@ -56,3 +57,52 @@ class AdselTest(TestCase):
         applications = self.adsel.get_applications_by_qtr_syskey(0, 123)
         self.assertEqual(len(applications), 4)
         self.assertEqual(applications[0].adsel_id, 1)
+
+    def test_post(self):
+        a1 = Application()
+        a1.adsel_id = 123
+        a1.system_key = 41
+        a1.application_number = 1
+        a2 = Application()
+        a2.adsel_id = 734
+        a2.system_key = 34
+        a2.application_number = 5
+
+        cohort_assign = CohortAssignment()
+        cohort_assign.applicants = [a1, a2]
+        cohort_assign.assignment_type = "upload"
+        cohort_assign.cohort_number = 1
+        cohort_assign.override_protected = True
+        cohort_assign.override_previous = False
+        cohort_assign.quarter = 0
+        cohort_assign.campus = 1
+        cohort_assign.comments = "My comment"
+        cohort_assign.user = "javerage"
+
+        cohort_json = cohort_assign.json_data()
+        self.assertEqual(cohort_json['overridePreviousCohort'], False)
+        self.assertEqual(cohort_json['overridePreviousProtectedCohort'], True)
+
+        try:
+            submission = self.adsel.assign_cohorts(cohort_assign)
+        except Exception:
+            self.fail('assign_cohorts raised an exception')
+
+        major_assign = MajorAssignment()
+        major_assign.applicants = [a1, a2]
+        major_assign.assignment_type = "upload"
+        major_assign.major_code = "CSE"
+        major_assign.quarter = 0
+        major_assign.campus = 1
+        major_assign.comments = "My comment"
+        major_assign.user = "javerage"
+
+        major_json = major_assign.json_data()
+        self.assertEqual(len(major_json['applicants']), 2)
+        self.assertEqual(major_json['applicants'][0]['admissionSelectionId'],
+                         123)
+
+        try:
+            submission = self.adsel.assign_majors(major_assign)
+        except Exception:
+            self.fail('assign_majors raised an exception')
