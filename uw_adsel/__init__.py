@@ -201,9 +201,9 @@ class AdSel(object):
         return json.loads(response.data)
 
     def _post_resource(self, url, request):
-        response = self.DAO.postURL(url, self._headers(), body=request)
+        response = self.DAO.postURL(url, self._post_headers(), body=json.dumps(request))
 
-        if response.status != 200:
+        if response.status != 201:
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
 
@@ -211,6 +211,10 @@ class AdSel(object):
 
     def _headers(self):
         headers = {"Accept": "application/json"}
+        return headers
+
+    def _post_headers(self):
+        headers = {'Content-Type': 'application/json'}
         return headers
 
     def _log_error(self, url, response):
