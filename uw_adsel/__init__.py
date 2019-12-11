@@ -201,9 +201,10 @@ class AdSel(object):
         return json.loads(response.data)
 
     def _post_resource(self, url, request):
-        response = self.DAO.postURL(url, self._post_headers(), body=json.dumps(request))
-
-        if response.status != 201:
+        response = self.DAO.postURL(url,
+                                    self._post_headers(),
+                                    body=json.dumps(request))
+        if response.status not in [200, 201]:
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
 
