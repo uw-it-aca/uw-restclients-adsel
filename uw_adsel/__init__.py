@@ -87,20 +87,6 @@ class AdSel(object):
         url = "{}/activities".format(self.API)
         response = self._get_resource(url)
         activities = self._activities_from_json(response)
-        # TODO Confirm how pagination will work
-        if response['totalCount'] > 1:
-            activity_page = 2
-            while activity_page <= response['totalCount']:
-                page_activities = self.get_activities_by_page(
-                    activity_page)
-                activities.extend(page_activities)
-                activity_page += 1
-        return activities
-
-    def get_activities_by_page(self, page, **kwargs):
-        url = "{}/activities?Page={}".format(self.API, page)
-        response = self._get_resource(url)
-        activities = self._activities_from_json(response)
         return activities
 
     def _activities_from_json(self, response):
@@ -124,20 +110,6 @@ class AdSel(object):
         url = "{}/cohorts/{}".format(self.API, quarter_id)
         response = self._get_resource(url)
         cohorts = self._cohorts_from_json(response)
-        # TODO Confirm how pagination will work
-        if response['totalCount'] > 1:
-            cohort_page = 2
-            while cohort_page <= response['totalCount']:
-                page_cohorts = self.get_cohorts_by_qtr_page(quarter_id,
-                                                            cohort_page)
-                cohorts.extend(page_cohorts)
-                cohort_page += 1
-        return cohorts
-
-    def get_cohorts_by_qtr_page(self, quarter_id, page, **kwargs):
-        url = "{}/cohorts/{}?Page={}".format(self.API, quarter_id, page)
-        response = self._get_resource(url)
-        cohorts = self._cohorts_from_json(response)
         return cohorts
 
     def _cohorts_from_json(self, response):
@@ -157,20 +129,6 @@ class AdSel(object):
 
     def get_majors_by_qtr(self, quarter_id, **kwargs):
         url = "{}/majors/details/{}".format(self.API, quarter_id)
-        response = self._get_resource(url)
-        majors = self._majors_from_json(response)
-        # TODO Confirm how pagination will work
-        if response['totalCount'] > 1:
-            major_page = 2
-            while major_page <= response['totalCount']:
-                page_majors = self.get_majors_by_qtr_page(quarter_id,
-                                                          major_page)
-                majors.extend(page_majors)
-                major_page += 1
-        return majors
-
-    def get_majors_by_qtr_page(self, quarter_id, page, **kwargs):
-        url = "{}/majors/details/{}?Page={}".format(self.API, quarter_id, page)
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
         return majors
