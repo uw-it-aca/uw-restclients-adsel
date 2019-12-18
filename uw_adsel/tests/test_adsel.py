@@ -23,8 +23,8 @@ class AdselTest(TestCase):
 
     def test_get_majors(self):
         majors = self.adsel.get_majors_by_qtr(0)
-        self.assertEqual(len(majors), 4)
-        self.assertEqual(majors[2].major_abbr, "CSE")
+        self.assertEqual(len(majors), 2)
+        self.assertEqual(majors[1].major_abbr, "CHEM")
         majors_unpaginated = self.adsel.get_majors_by_qtr(1)
         self.assertEqual(len(majors_unpaginated), 2)
 
@@ -38,8 +38,9 @@ class AdselTest(TestCase):
 
     def test_get_cohorts(self):
         cohorts = self.adsel.get_cohorts_by_qtr(0)
-        self.assertEqual(len(cohorts), 4)
-        self.assertEqual(cohorts[2].cohort_description, "Second Page Cohort")
+        self.assertEqual(len(cohorts), 2)
+        self.assertEqual(cohorts[1].cohort_description,
+                         "This is another cohort")
         cohorts_unpaginated = self.adsel.get_cohorts_by_qtr(1)
         self.assertEqual(len(cohorts_unpaginated), 2)
 
@@ -50,7 +51,7 @@ class AdselTest(TestCase):
 
     def test_get_activities(self):
         activities = self.adsel.get_activities()
-        self.assertEqual(len(activities), 5)
+        self.assertEqual(len(activities), 4)
         self.assertEqual(activities[0].user, "javerage")
 
     def test_get_application(self):
