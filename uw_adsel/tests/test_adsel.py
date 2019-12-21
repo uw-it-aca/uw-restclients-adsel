@@ -107,3 +107,7 @@ class AdselTest(TestCase):
             submission = self.adsel.assign_majors(major_assign)
         except Exception:
             self.fail('assign_majors raised an exception')
+
+    def test_get_all_app(self):
+        apps = self.adsel.get_all_applications_by_qtr(0)
+        self.assertEqual(len(apps), 4)

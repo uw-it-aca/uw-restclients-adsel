@@ -63,6 +63,12 @@ class AdSel(object):
             quarters.append(qtr)
         return quarters
 
+    def get_all_applications_by_qtr(self, quarter_id):
+        url = "{}/applications/{}/all".format(self.API, quarter_id)
+        response = self._get_resource(url)
+        applications = self._get_applications_from_json(response)
+        return applications
+
     def get_applications_by_qtr_syskey(self, quarter_id, syskey):
         url = "{}/applications/{}/{}".format(self.API, quarter_id, syskey)
         response = self._get_resource(url)
