@@ -20,7 +20,7 @@
 			"assignedCount": 0
 		}
 	],
-	"nextPage": "2",
-	"previousPage": "1",
-	"totalCount": 2
+	"nextPage": "https://foobartest.uw.edu/api/v1/majors/details/20194?Page=2&Limit=100",
+	"previousPage": null,
+	"totalCount": 4
 }
