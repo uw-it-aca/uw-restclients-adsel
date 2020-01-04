@@ -134,10 +134,19 @@ class AdSel(object):
         return cohorts
 
     def get_majors_by_qtr(self, quarter_id, **kwargs):
-        url = "{}/majors/details/{}".format(self.API, quarter_id)
+        majors = self._get_majors_by_page(quarter_id, 1, [])
+        return majors
+
+    def _get_majors_by_page(self, quarter_id, page, major_list=[]):
+        url = "{}/majors/details/{}?Page={}&Limit=100".format(self.API,
+                                                              quarter_id,
+                                                              page)
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
-        return majors
+        major_list += majors
+        if response['nextPage'] is not None:
+            self._get_majors_by_page(quarter_id, page+1, major_list)
+        return major_list
 
     def _majors_from_json(self, response):
         majors = []
