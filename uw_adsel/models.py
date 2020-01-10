@@ -56,7 +56,7 @@ class Application(models.Model):
 
     def json_data(self):
         return {'admissionSelectionId': self.adsel_id,
-                'aplicationNbr': self.application_number,
+                'applicationNbr': self.application_number,
                 'systemKey': self.system_key}
 
 
