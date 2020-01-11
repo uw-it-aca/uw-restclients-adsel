@@ -7,7 +7,8 @@
 			"division": "3A",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 32
+			"assignedCount": 32,
+			"majorProgramCode": "0_BIOL_1"
 		},
 		{
 			"majorAbbr": "CHEM",
@@ -17,7 +18,8 @@
 			"division": "6B2",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 0
+			"assignedCount": 0,
+			"majorProgramCode": "0_CHEM_1"
 		}
 	],
 	"nextPage": null,

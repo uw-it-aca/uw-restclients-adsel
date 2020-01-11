@@ -7,7 +7,8 @@
 			"division": "A4C",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 32
+			"assignedCount": 32,
+			"majorProgramCode": "0_CSE_1"
 		},
 		{
 			"majorAbbr": "CHEM",
@@ -17,7 +18,8 @@
 			"division": "32D2",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 0
+			"assignedCount": 0,
+			"majorProgramCode": "0_CHEM_1"
 		}
 	],
 	"nextPage": null,
