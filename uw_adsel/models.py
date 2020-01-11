@@ -3,6 +3,7 @@ from restclients_core import models
 
 class Major(models.Model):
     major_abbr = models.CharField(max_length=32)
+    program_code = models.CharField(max_length=128)
     academic_qtr_key_id = models.IntegerField()
     major_pathway = models.IntegerField()
     display_name = models.CharField(max_length=255)
@@ -91,7 +92,7 @@ class CohortAssignment(Assignment):
 
 
 class MajorAssignment(Assignment):
-    major_code = models.IntegerField()
+    major_code = models.CharField()
 
     def json_data(self):
         applicant_json = []

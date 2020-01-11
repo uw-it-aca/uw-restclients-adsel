@@ -153,6 +153,7 @@ class AdSel(object):
         for major_data in response['majors']:
             major = Major()
             major.major_abbr = major_data['majorAbbr']
+            major.program_code = major_data['majorProgramCode']
             major.academic_qtr_key_id = major_data['academicQtrKeyId']
             major.major_pathway = major_data['majorPathway']
             major.display_name = major_data['displayName']
