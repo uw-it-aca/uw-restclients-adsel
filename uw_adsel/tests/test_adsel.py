@@ -85,7 +85,7 @@ class AdselTest(TestCase):
         self.assertEqual(cohort_json['overridePreviousProtectedCohort'], True)
 
         try:
-            submission = self.adsel.assign_cohorts(cohort_assign)
+            submission = self.adsel.assign_cohorts_bulk(cohort_assign)
         except Exception:
             self.fail('assign_cohorts raised an exception')
 

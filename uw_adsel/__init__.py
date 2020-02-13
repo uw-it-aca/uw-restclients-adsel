@@ -34,8 +34,14 @@ class AdSel(object):
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
 
-    def assign_cohorts(self, cohort_assignment):
+    def assign_cohorts_bulk(self, cohort_assignment):
         url = "{}/assignments/cohort/bulk".format(self.API)
+        request = cohort_assignment.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
+
+    def assign_cohorts_manual(self, cohort_assignment):
+        url = "{}/assignments/cohort".format(self.API)
         request = cohort_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
