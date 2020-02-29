@@ -54,6 +54,7 @@ class Application(models.Model):
     quarter_id = models.IntegerField()
     assigned_cohort = models.IntegerField()
     assigned_major = models.CharField(max_length=32)
+    major_program_code = models.CharField(max_length=255)
 
     def json_data(self):
         return {'admissionSelectionId': self.adsel_id,
