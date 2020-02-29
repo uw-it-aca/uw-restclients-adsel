@@ -6,7 +6,8 @@
     "campus": 0,
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
-    "assignedMajor": "string"
+    "assignedMajor": "string",
+    "majorProgramCode": null
   },
   {
     "admissionsSelectionId": 34,
@@ -15,7 +16,8 @@
     "campus": 0,
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
-    "assignedMajor": "string"
+    "assignedMajor": "string",
+    "majorProgramCode": null
   },
   {
     "admissionsSelectionId": 453,
@@ -24,7 +26,8 @@
     "campus": 1,
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
-    "assignedMajor": "string"
+    "assignedMajor": "string",
+    "majorProgramCode": null
   },
   {
     "admissionsSelectionId": 345,
@@ -33,6 +36,7 @@
     "campus": 1,
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
-    "assignedMajor": "string"
+    "assignedMajor": "string",
+    "majorProgramCode": null
   }
 ]
