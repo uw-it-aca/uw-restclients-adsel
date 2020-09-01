@@ -5,7 +5,7 @@
     "activeQtrEndDttm": "2019-12-25T00:00:00",
     "activeInd": "string",
     "appl_yr": "2019",
-    "appl_qtr": "autumn"
+    "appl_qtr": "3"
   },
   {
     "academicQtrKeyId": 1,
@@ -13,6 +13,6 @@
     "activeQtrEndDttm": "2020-03-05T00:00:00",
     "activeInd": "string",
     "appl_yr": "2019",
-    "appl_qtr": "winter"
+    "appl_qtr": "1"
   }
 ]
