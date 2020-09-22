@@ -130,10 +130,14 @@ class AdSel(object):
             filters['assignmentPeriod'] = assignment_period
         if comment is not None:
             filters['comment'] = comment
-        url = url + urllib.parse.urlencode(filters)
-        response = self._get_resource(url)
-        activities = self._activities_from_json(response)
-        return activities
+        filter_url = urllib.parse.urlencode(filters)
+        if len(filter_url) > 0:
+            url = url + "?" + filter_url
+        try:
+            response = self._get_resource(url)
+            return self._activities_from_json(response)
+        except DataFailureException:
+            return []
 
     def get_activities(self, **kwargs):
         return self.get_filtered_activities()
