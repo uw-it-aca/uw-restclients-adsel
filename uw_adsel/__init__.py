@@ -9,6 +9,7 @@ from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application
 import dateutil.parser
 from datetime import datetime
+import urllib.parse
 
 
 logger = logging.getLogger(__name__)
@@ -96,11 +97,46 @@ class AdSel(object):
             applications.append(application)
         return applications
 
-    def get_activities(self, **kwargs):
+    def get_filtered_activities(self,
+                                netid=None,
+                                assignment_type=None,
+                                cohort=None,
+                                major=None,
+                                start_date=None,
+                                end_date=None,
+                                system_key=None,
+                                collection_type=None,
+                                assignment_period=None,
+                                comment=None):
         url = "{}/activities".format(self.API)
+        filters = {}
+        if netid is not None:
+            filters['netid'] = netid
+        if assignment_type is not None:
+            filters['assignmentType'] = assignment_type
+        if cohort is not None:
+            filters['cohort'] = cohort
+        if major is not None:
+            filters['cohort'] = major
+        if start_date is not None:
+            filters['startDate'] = start_date
+        if end_date is not None:
+            filters['endDate'] = end_date
+        if system_key is not None:
+            filters['systemKey'] = system_key
+        if collection_type is not None:
+            filters['collectionType'] = collection_type
+        if assignment_period is not None:
+            filters['assignmentPeriod'] = assignment_period
+        if comment is not None:
+            filters['comment'] = comment
+        url = url + urllib.parse.urlencode(filters)
         response = self._get_resource(url)
         activities = self._activities_from_json(response)
         return activities
+
+    def get_activities(self, **kwargs):
+        return self.get_filtered_activities()
 
     def _activities_from_json(self, response):
         activities = []
