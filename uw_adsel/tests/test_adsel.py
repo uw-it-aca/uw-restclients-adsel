@@ -54,6 +54,18 @@ class AdselTest(TestCase):
         self.assertEqual(len(activities), 4)
         self.assertEqual(activities[0].user, "javerage")
 
+    def test_get_filtered_activities(self):
+        # netid filter
+        activities = self.adsel.get_filtered_activities(netid="javerage")
+        self.assertEqual(len(activities), 2)
+        # No results
+        activities = self.adsel.get_filtered_activities(netid="foo")
+        self.assertEqual(len(activities), 0)
+        # dual filter
+        activities = self.adsel.get_filtered_activities(netid="javerage",
+                                                        system_key=12345)
+        self.assertEqual(len(activities), 4)
+
     def test_get_application(self):
         applications = self.adsel.get_applications_by_qtr_syskey(0, 123)
         self.assertEqual(len(applications), 4)
