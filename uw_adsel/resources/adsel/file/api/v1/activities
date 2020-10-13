@@ -6,7 +6,7 @@
       "assignmentMadeBy": "javerage",
       "assignmentType": "Type 1",
       "cohortNbr": 42,
-      "majorAbbr": "",
+      "majorAbbr": null,
       "majorProgramCode": "",
       "totalSubmitted": 20,
       "totalAssigned": 19
@@ -17,7 +17,7 @@
       "assignmentMadeBy": "javerage",
       "assignmentType": "Type 3",
       "cohortNbr": 13,
-      "majorAbbr": "",
+      "majorAbbr": null,
       "majorProgramCode": "",
       "totalSubmitted": 35,
       "totalAssigned": 35
