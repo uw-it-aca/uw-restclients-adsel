@@ -2,7 +2,8 @@ from unittest import TestCase, mock
 from restclients_core.exceptions import DataFailureException
 from uw_adsel.utilities import fdao_adsel_override
 from uw_adsel import AdSel
-from uw_adsel.models import CohortAssignment, MajorAssignment, Application
+from uw_adsel.models import CohortAssignment, MajorAssignment, Application,\
+    PurpleGoldApplication, PurpleGoldAssignment
 from datetime import datetime
 
 
@@ -123,3 +124,31 @@ class AdselTest(TestCase):
     def test_get_all_app(self):
         apps = self.adsel.get_all_applications_by_qtr(0)
         self.assertEqual(len(apps), 4)
+
+    def test_purple_gold_assignment(self):
+        a1 = PurpleGoldApplication()
+        a1.adsel_id = 123
+        a1.system_key = 41
+        a1.application_number = 1
+        a1.award_amount = 1000
+        a2 = PurpleGoldApplication()
+        a2.adsel_id = 734
+        a2.system_key = 34
+        a2.application_number = 5
+        a2.award_amount = 2000
+
+        purple_gold_assign = PurpleGoldAssignment()
+        purple_gold_assign.applicants = [a1, a2]
+        purple_gold_assign.assignment_type = "upload"
+        purple_gold_assign.quarter = 0
+        purple_gold_assign.campus = 1
+        purple_gold_assign.comments = "My comment"
+        purple_gold_assign.user = "javerage"
+
+        json_data = purple_gold_assign.json_data()
+        self.assertEqual(json_data['applicants'][0]['awardAmount'], 1000)
+
+        try:
+            submission = self.adsel.assign_purple_gold(purple_gold_assign)
+        except Exception:
+            self.fail('assign_purple_gold raised an exception')
