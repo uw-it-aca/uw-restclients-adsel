@@ -62,6 +62,16 @@ class Application(models.Model):
                 'systemKey': self.system_key}
 
 
+class PurpleGoldApplication(Application):
+    award_amount = models.IntegerField()
+
+    def json_data(self):
+        return {'admissionSelectionId': self.adsel_id,
+                'applicationNbr': self.application_number,
+                'systemKey': self.system_key,
+                'awardAmount': self.award_amount}
+
+
 class Assignment(models.Model):
     assignment_type = models.CharField()
     quarter = models.IntegerField()
@@ -101,6 +111,20 @@ class MajorAssignment(Assignment):
             applicant_json.append(application.json_data())
         return {'applicants': applicant_json,
                 'majorProgramCode': self.major_code,
+                'assignmentDetail': {'assignmentType': self.assignment_type,
+                                     'academicQtrKeyId': self.quarter,
+                                     'campus': self.campus,
+                                     'comments': self.comments,
+                                     'decisionImportUser': self.user}
+                }
+
+
+class PurpleGoldAssignment(Assignment):
+    def json_data(self):
+        applicant_json = []
+        for application in self.applicants:
+            applicant_json.append(application.json_data())
+        return {'applicants': applicant_json,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
                                      'campus': self.campus,

@@ -47,6 +47,12 @@ class AdSel(object):
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
 
+    def assign_purple_gold(self, pg_assignments):
+        url = "{}/assignments/purpleAndGold".format(self.API)
+        request = pg_assignments.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
+
     def get_quarters(self, **kwargs):
         url = "{}/academicqtr".format(self.API)
         response = self._get_resource(url)
