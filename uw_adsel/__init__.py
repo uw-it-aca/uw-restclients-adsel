@@ -117,7 +117,7 @@ class AdSel(object):
         if cohort is not None:
             filters['cohort'] = cohort
         if major is not None:
-            filters['cohort'] = major
+            filters['major'] = major
         if start_date is not None:
             filters['startDate'] = start_date
         if end_date is not None:
