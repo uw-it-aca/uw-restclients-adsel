@@ -57,7 +57,7 @@ class Application(models.Model):
     major_program_code = models.CharField(max_length=255)
 
     def json_data(self):
-        return {'admissionSelectionId': self.adsel_id,
+        return {'admissionSelectionId': int(self.adsel_id),
                 'applicationNbr': self.application_number,
                 'systemKey': self.system_key}
 
@@ -66,9 +66,7 @@ class PurpleGoldApplication(Application):
     award_amount = models.IntegerField()
 
     def json_data(self):
-        return {'admissionSelectionId': self.adsel_id,
-                'applicationNbr': self.application_number,
-                'systemKey': self.system_key,
+        return {'admissionSelectionId': int(self.adsel_id),
                 'awardAmount': self.award_amount}
 
 
@@ -127,7 +125,6 @@ class PurpleGoldAssignment(Assignment):
         return {'applicants': applicant_json,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
-                                     'campus': self.campus,
                                      'comments': self.comments,
                                      'decisionImportUser': self.user}
                 }
