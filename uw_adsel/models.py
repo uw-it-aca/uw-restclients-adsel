@@ -67,8 +67,6 @@ class PurpleGoldApplication(Application):
 
     def json_data(self):
         return {'admissionSelectionId': self.adsel_id,
-                'applicationNbr': self.application_number,
-                'systemKey': self.system_key,
                 'awardAmount': self.award_amount}
 
 
@@ -127,7 +125,6 @@ class PurpleGoldAssignment(Assignment):
         return {'applicants': applicant_json,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
-                                     'campus': self.campus,
                                      'comments': self.comments,
                                      'decisionImportUser': self.user}
                 }
