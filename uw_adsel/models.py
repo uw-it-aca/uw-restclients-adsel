@@ -59,7 +59,7 @@ class Application(models.Model):
     def json_data(self):
         return {'admissionSelectionId': int(self.adsel_id),
                 'applicationNbr': self.application_number,
-                'systemKey': self.system_key}
+                'systemKey': int(self.system_key)}
 
 
 class PurpleGoldApplication(Application):
@@ -89,12 +89,12 @@ class CohortAssignment(Assignment):
         for application in self.applicants:
             applicant_json.append(application.json_data())
         return {'applicants': applicant_json,
-                'cohortNbr': self.cohort_number,
+                'cohortNbr': int(self.cohort_number),
                 'overridePreviousCohort': self.override_previous,
                 'overridePreviousProtectedCohort': self.override_protected,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
-                                     'campus': self.campus,
+                                     'campus': int(self.campus),
                                      'comments': self.comments,
                                      'decisionImportUser': self.user}
                 }
@@ -111,7 +111,7 @@ class MajorAssignment(Assignment):
                 'majorProgramCode': self.major_code,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
-                                     'campus': self.campus,
+                                     'campus': int(self.campus),
                                      'comments': self.comments,
                                      'decisionImportUser': self.user}
                 }
