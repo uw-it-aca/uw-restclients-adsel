@@ -19,6 +19,7 @@ before_deploy:
 - echo $TRAVIS_TAG > uw_adsel/VERSION
 deploy:
   provider: pypi
+  edge: true
   user: uw-it-aca
   skip_cleanup: true
   on:
