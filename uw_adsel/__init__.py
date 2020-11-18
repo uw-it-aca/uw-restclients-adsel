@@ -111,6 +111,7 @@ class AdSel(object):
                                 start_date=None,
                                 end_date=None,
                                 system_key=None,
+                                adsel_id=None,
                                 collection_type=None,
                                 assignment_period=None,
                                 comment=None):
@@ -130,6 +131,8 @@ class AdSel(object):
             filters['endDate'] = end_date
         if system_key is not None:
             filters['systemKey'] = system_key
+        if adsel_id is not None:
+            filters['admissionSelectionId'] = adsel_id
         if collection_type is not None:
             filters['collectionType'] = collection_type
         if assignment_period is not None:
