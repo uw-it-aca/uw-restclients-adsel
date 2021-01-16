@@ -90,8 +90,7 @@ class AdSel(object):
         return application
 
     def get_applications_by_qtr_syskey_list(self, quarter_id, syskey_list):
-        dao_impl = self.DAO.get_implementation()
-        if isinstance(dao_impl, MockDAO):
+        if isinstance(self.DAO.get_implementation(), MockDAO):
             all_applications = self._get_live_apps_by_qtr_syskey_list(
                 quarter_id,
                 syskey_list)
