@@ -5,6 +5,7 @@ This is the interface for interacting with the AdSel Web Service.
 import json
 import logging
 from restclients_core.exceptions import DataFailureException
+from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application
 import dateutil.parser
@@ -87,6 +88,24 @@ class AdSel(object):
         response = self._get_resource(url)
         application = self._get_applications_from_json(response)
         return application
+
+    def get_applications_by_qtr_syskey_list(self, quarter_id, syskey_list):
+        dao_impl = self.DAO.get_implementation()
+        if isinstance(dao_impl, MockDAO):
+            all_applications = self._get_live_apps_by_qtr_syskey_list(
+                quarter_id,
+                syskey_list)
+            return [app for app in all_applications
+                    if app.system_key in syskey_list]
+        else:
+            return self._get_live_apps_by_qtr_syskey_list(quarter_id,
+                                                          syskey_list)
+
+    def _get_live_apps_by_qtr_syskey_list(self, quarter_id, syskey_list):
+        url = "{}/applications/SystemKeys/{}".format(self.API, quarter_id)
+        response = self._post_resource(url, syskey_list)
+        applications = self._get_applications_from_json(response)
+        return applications
 
     def _get_applications_from_json(self, response):
         applications = []
