@@ -171,3 +171,10 @@ class AdselTest(TestCase):
             submission = self.adsel.assign_purple_gold(purple_gold_assign)
         except Exception:
             self.fail('assign_purple_gold raised an exception')
+
+    def test_get_major_details(self):
+        client = AdSel()
+        major_details = client.get_major_details_by_qtr_major(0, "0_BIOL_1")
+        self.assertEqual(major_details.assigned_nonresident, 6)
+        self.assertEqual(major_details.assigned_international, 0)
+        self.assertEqual(major_details.assigned_resident, 12412)

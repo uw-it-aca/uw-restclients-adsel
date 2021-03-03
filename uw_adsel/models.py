@@ -11,6 +11,9 @@ class Major(models.Model):
     division = models.CharField(max_length=255)
     dtx = models.CharField(max_length=255)
     assigned_count = models.IntegerField()
+    assigned_resident = models.IntegerField(null=True)
+    assigned_nonresident = models.IntegerField(null=True)
+    assigned_international = models.IntegerField(null=True)
 
 
 class Cohort(models.Model):

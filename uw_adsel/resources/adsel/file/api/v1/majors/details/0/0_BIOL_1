@@ -1,0 +1,14 @@
+{
+    "majorAbbr": "BIOL",
+    "academicQtrKeyId": 0,
+    "displayName": "Biology",
+    "college": "Science",
+    "division": "3A",
+    "majorPathway": 0,
+    "dtx": "string",
+    "assignedCount": 32,
+    "majorProgramCode": "0_BIOL_1",
+	"resident": 12412,
+	"nonResident": 6,
+	"international": 0
+}
