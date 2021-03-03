@@ -207,6 +207,14 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
+    def get_major_details_by_qtr_major(self, quarter_id, major_program_code):
+        url = "{}/majors/details/{}/{}".format(self.API,
+                                               quarter_id,
+                                               major_program_code)
+        response = self._get_resource(url)
+        major = self._major_from_json(response)
+        return major
+
     def get_majors_by_qtr(self, quarter_id, **kwargs):
         majors = self._get_majors_by_page(quarter_id, 1, [])
         return majors
@@ -225,19 +233,28 @@ class AdSel(object):
     def _majors_from_json(self, response):
         majors = []
         for major_data in response['majors']:
-            major = Major()
-            major.major_abbr = major_data['majorAbbr']
-            major.program_code = major_data['majorProgramCode']
-            major.academic_qtr_key_id = major_data['academicQtrKeyId']
-            major.major_pathway = major_data['majorPathway']
-            major.display_name = major_data['displayName']
-            major.college = major_data['college']
-            major.division = major_data['division']
-            major.dtx = major_data['dtx']
-            major.assigned_count = major_data['assignedCount']
-
+            major = self._major_from_json(major_data)
             majors.append(major)
         return majors
+
+    def _major_from_json(self, major_data):
+        major = Major()
+        major.major_abbr = major_data['majorAbbr']
+        major.program_code = major_data['majorProgramCode']
+        major.academic_qtr_key_id = major_data['academicQtrKeyId']
+        major.major_pathway = major_data['majorPathway']
+        major.display_name = major_data['displayName']
+        major.college = major_data['college']
+        major.division = major_data['division']
+        major.dtx = major_data['dtx']
+        major.assigned_count = major_data['assignedCount']
+        try:
+            major.assigned_international = major_data['international']
+            major.assigned_resident = major_data['resident']
+            major.assigned_nonresident = major_data['nonResident']
+        except KeyError:
+            pass
+        return major
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())

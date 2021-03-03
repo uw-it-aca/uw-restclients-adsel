@@ -1,0 +1,14 @@
+{
+    "majorAbbr": "CSE",
+    "academicQtrKeyId": 0,
+    "displayName": "Comp Sci Eng",
+    "college": "Engineering",
+    "division": "A4C",
+    "majorPathway": 0,
+    "dtx": "string",
+    "assignedCount": 32,
+    "majorProgramCode": "0_CSE_1",
+    "resident": 1,
+    "nonResident": 0,
+    "international": 1212
+}
