@@ -8,7 +8,7 @@
 	"dtx": "string",
 	"assignedCount": 0,
 	"majorProgramCode": "0_CHEM_1",
-	"resident": 101,
-	"nonResident": 21,
-	"international": 1
+	"residentCount": 101,
+	"nonResidentCount": 21,
+	"internationalCount": 1
 }

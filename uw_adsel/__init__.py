@@ -249,9 +249,9 @@ class AdSel(object):
         major.dtx = major_data['dtx']
         major.assigned_count = major_data['assignedCount']
         try:
-            major.assigned_international = major_data['international']
-            major.assigned_resident = major_data['resident']
-            major.assigned_nonresident = major_data['nonResident']
+            major.assigned_international = major_data['internationalCount']
+            major.assigned_resident = major_data['residentCount']
+            major.assigned_nonresident = major_data['nonResidentCount']
         except KeyError:
             pass
         return major
