@@ -8,7 +8,7 @@
     "dtx": "string",
     "assignedCount": 32,
     "majorProgramCode": "0_BIOL_1",
-	"resident": 12412,
-	"nonResident": 6,
-	"international": 0
+	"residentCount": 12412,
+	"nonResidentCount": 6,
+	"internationalCount": 0
 }
