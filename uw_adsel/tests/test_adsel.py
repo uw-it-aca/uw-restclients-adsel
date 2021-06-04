@@ -178,3 +178,12 @@ class AdselTest(TestCase):
         self.assertEqual(major_details.assigned_nonresident, 6)
         self.assertEqual(major_details.assigned_international, 0)
         self.assertEqual(major_details.assigned_resident, 12412)
+
+    def test_get_decisions(self):
+        client = AdSel()
+        decisions = client.get_decisions_by_qtr(0)
+        self.assertEqual(len(decisions), 5)
+        dec = decisions[3]
+        self.assertEqual(dec.display_name, "Fourth decision")
+        self.assertEqual(dec.assigned_count, 1451)
+        self.assertEqual(dec.decision_id, "0_foo_4")

@@ -7,7 +7,8 @@ import logging
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.models import Major, Cohort, Quarter, Activity, Application
+from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
+    Decision
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -206,6 +207,23 @@ class AdSel(object):
             cohort_model.assigned_count = cohort['assignedCount']
             cohorts.append(cohort_model)
         return cohorts
+
+    def get_decisions_by_qtr(self, quarter_id, **kwargs):
+        url = "{}/decisions/{}".format(self.API, quarter_id)
+        response = self._get_resource(url)
+        decisions = self._decisions_from_json(response)
+        return decisions
+
+    def _decisions_from_json(self, response):
+        decisions = []
+        for decision in response['decisions']:
+            decision_model = Decision()
+            decision_model.academic_qtr_id = decision['academicQtrKeyId']
+            decision_model.display_name = decision['displayName']
+            decision_model.assigned_count = decision['assignedCount']
+            decision_model.decision_id = decision['decisionID']
+            decisions.append(decision_model)
+        return decisions
 
     def get_major_details_by_qtr_major(self, quarter_id, major_program_code):
         url = "{}/majors/details/{}/{}".format(self.API,
