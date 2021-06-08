@@ -54,6 +54,8 @@ class AdselTest(TestCase):
         activities = self.adsel.get_activities()
         self.assertEqual(len(activities), 4)
         self.assertEqual(activities[0].user, "javerage")
+        self.assertEqual(activities[0].decision_import_id, 784)
+        self.assertEqual(activities[0].assignment_category, "Cohort")
 
     def test_get_filtered_activities(self):
         # netid filter
