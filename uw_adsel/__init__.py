@@ -133,7 +133,8 @@ class AdSel(object):
                                 adsel_id=None,
                                 collection_type=None,
                                 assignment_period=None,
-                                comment=None):
+                                comment=None,
+                                assingment_category=None):
         url = "{}/activities".format(self.API)
         filters = {}
         if netid is not None:
@@ -158,6 +159,8 @@ class AdSel(object):
             filters['assignmentPeriod'] = assignment_period
         if comment is not None:
             filters['comment'] = comment
+        if assingment_category is not None:
+            filters['assignmentCategory'] = assingment_category
         filter_url = urllib.parse.urlencode(filters)
         if len(filter_url) > 0:
             url = url + "?" + filter_url
@@ -184,6 +187,8 @@ class AdSel(object):
             acty.major_program_code = activity['majorProgramCode']
             acty.total_submitted = activity['totalSubmitted']
             acty.total_assigned = activity['totalAssigned']
+            acty.assignment_category = activity['assignmentCategory']
+            acty.decision_import_id = activity['decisionImportID']
             activities.append(acty)
         return activities
 
