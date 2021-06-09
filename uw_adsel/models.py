@@ -54,8 +54,6 @@ class Activity(models.Model):
     major_program_code = models.CharField(max_length=32)
     total_submitted = models.IntegerField()
     total_assigned = models.IntegerField()
-    assignment_category = models.CharField(max_length=32)
-    decision_import_id = models.IntegerField()
 
 
 class Application(models.Model):
@@ -137,6 +135,25 @@ class PurpleGoldAssignment(Assignment):
         return {'applicants': applicant_json,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
+                                     'comments': self.comments,
+                                     'decisionImportUser': self.user}
+                }
+
+
+class DecisionAssignment(Assignment):
+    decision = models.CharField()
+    override_previous = models.BooleanField()
+    override_protected = models.BooleanField()
+
+    def json_data(self):
+        applicant_json = []
+        for application in self.applicants:
+            applicant_json.append(application.json_data())
+        return {'applicants': applicant_json,
+                'decision': self.decision,
+                'assignmentDetail': {'assignmentType': self.assignment_type,
+                                     'academicQtrKeyId': self.quarter,
+                                     'campus': int(self.campus),
                                      'comments': self.comments,
                                      'decisionImportUser': self.user}
                 }
