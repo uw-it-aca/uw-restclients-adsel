@@ -28,9 +28,7 @@ class Cohort(models.Model):
 
 
 class Decision(models.Model):
-    academic_qtr_id = models.IntegerField()
-    display_name = models.CharField(max_length=255)
-    assigned_count = models.IntegerField()
+    decision_name = models.CharField(max_length=255)
     decision_id = models.CharField(max_length=128)
 
 
