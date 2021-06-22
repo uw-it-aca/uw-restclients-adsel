@@ -78,6 +78,14 @@ class PurpleGoldApplication(Application):
                 'awardAmount': self.award_amount}
 
 
+class DepartmentalDecisionApplication(Application):
+    decision_id = models.IntegerField()
+
+    def json_data(self):
+        return {'admissionSelectionId': int(self.adsel_id),
+                'departmentalDecisionId': self.decision_id}
+
+
 class Assignment(models.Model):
     assignment_type = models.CharField()
     quarter = models.IntegerField()
@@ -140,15 +148,12 @@ class PurpleGoldAssignment(Assignment):
 
 class DecisionAssignment(Assignment):
     decision = models.CharField()
-    override_previous = models.BooleanField()
-    override_protected = models.BooleanField()
 
     def json_data(self):
         applicant_json = []
         for application in self.applicants:
             applicant_json.append(application.json_data())
         return {'applicants': applicant_json,
-                'decision': self.decision,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),

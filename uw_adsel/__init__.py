@@ -56,7 +56,7 @@ class AdSel(object):
         return {"response": response, "request": request}
 
     def assign_decisions(self, decision_assignment):
-        url = "{}/assignments/decision".format(self.API)
+        url = "{}/assignments/departmentalDecision".format(self.API)
         request = decision_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
