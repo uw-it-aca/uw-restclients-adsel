@@ -56,7 +56,7 @@ class AdSel(object):
         return {"response": response, "request": request}
 
     def assign_decisions(self, decision_assignment):
-        url = "{}/assignments/decision".format(self.API)
+        url = "{}/assignments/departmentalDecision".format(self.API)
         request = decision_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
@@ -140,12 +140,15 @@ class AdSel(object):
                                 collection_type=None,
                                 assignment_period=None,
                                 comment=None,
-                                assingment_category=None):
+                                assingment_category=None,
+                                application_type=None):
         url = "{}/activities".format(self.API)
         filters = {}
         if netid is not None:
             filters['netid'] = netid
         if assignment_type is not None:
+            filters['assignmentType'] = assignment_type
+        if application_type is not None:
             filters['assignmentType'] = assignment_type
         if cohort is not None:
             filters['cohort'] = cohort
@@ -219,20 +222,18 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
-    def get_decisions_by_qtr(self, quarter_id, **kwargs):
-        url = "{}/decisions/{}".format(self.API, quarter_id)
+    def get_decisions(self, **kwargs):
+        url = "{}/departmentaldecisions".format(self.API)
         response = self._get_resource(url)
         decisions = self._decisions_from_json(response)
         return decisions
 
     def _decisions_from_json(self, response):
         decisions = []
-        for decision in response['decisions']:
+        for decision in response:
             decision_model = Decision()
-            decision_model.academic_qtr_id = decision['academicQtrKeyId']
-            decision_model.display_name = decision['displayName']
-            decision_model.assigned_count = decision['assignedCount']
-            decision_model.decision_id = decision['decisionID']
+            decision_model.decision_name = decision['departmentalDecision']
+            decision_model.decision_id = decision['departmentalDecisionId']
             decisions.append(decision_model)
         return decisions
 

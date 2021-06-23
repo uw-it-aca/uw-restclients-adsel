@@ -1,0 +1,37 @@
+[{
+		"departmentalDecisionId": 1,
+		"departmentalDecision": "Admitted to Major"
+	},
+	{
+		"departmentalDecisionId": 2,
+		"departmentalDecision": "Waitlisted to Major"
+	},
+	{
+		"departmentalDecisionId": 3,
+		"departmentalDecision": "Hold"
+	},
+	{
+		"departmentalDecisionId": 4,
+		"departmentalDecision": "Pending Decision"
+	},
+	{
+		"departmentalDecisionId": 5,
+		"departmentalDecision": "Applying to Major"
+	},
+	{
+		"departmentalDecisionId": 6,
+		"departmentalDecision": "Not Applying to Major"
+	},
+	{
+		"departmentalDecisionId": 7,
+		"departmentalDecision": "Did Not Apply to Major"
+	},
+	{
+		"departmentalDecisionId": 8,
+		"departmentalDecision": "Denied, Not Selected"
+	},
+	{
+		"departmentalDecisionId": 9,
+		"departmentalDecision": "Denied, Dept. Review"
+	}
+]

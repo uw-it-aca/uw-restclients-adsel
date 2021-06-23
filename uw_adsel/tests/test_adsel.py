@@ -3,7 +3,8 @@ from restclients_core.exceptions import DataFailureException
 from uw_adsel.utilities import fdao_adsel_override
 from uw_adsel import AdSel
 from uw_adsel.models import CohortAssignment, MajorAssignment, Application,\
-    PurpleGoldApplication, PurpleGoldAssignment
+    PurpleGoldApplication, PurpleGoldAssignment, DecisionAssignment,\
+    DepartmentalDecisionApplication
 from datetime import datetime
 
 
@@ -183,9 +184,37 @@ class AdselTest(TestCase):
 
     def test_get_decisions(self):
         client = AdSel()
-        decisions = client.get_decisions_by_qtr(0)
-        self.assertEqual(len(decisions), 5)
+        decisions = client.get_decisions()
+        self.assertEqual(len(decisions), 9)
         dec = decisions[3]
-        self.assertEqual(dec.display_name, "Fourth decision")
-        self.assertEqual(dec.assigned_count, 1451)
-        self.assertEqual(dec.decision_id, "0_foo_4")
+        self.assertEqual(dec.decision_name, "Pending Decision")
+        self.assertEqual(dec.decision_id, 4)
+
+    def test_decision_assignment(self):
+        a1 = DepartmentalDecisionApplication()
+        a1.adsel_id = 123
+        a1.system_key = 41
+        a1.application_number = 1
+        a1.decision_id = 1
+        a2 = DepartmentalDecisionApplication()
+        a2.adsel_id = 734
+        a2.system_key = 34
+        a2.application_number = 5
+        a2.decision_id = 2
+
+        dd_assign = DecisionAssignment()
+        dd_assign.applicants = [a1, a2]
+        dd_assign.assignment_type = "upload"
+        dd_assign.quarter = 0
+        dd_assign.campus = 1
+        dd_assign.comments = "My comment"
+        dd_assign.user = "javerage"
+
+        json_data = dd_assign.json_data()
+        self.assertEqual(json_data['applicants'][0]['departmentalDecisionId'],
+                         1)
+
+        try:
+            submission = self.adsel.assign_decisions(dd_assign)
+        except Exception:
+            self.fail('assign_decisions raised an exception')

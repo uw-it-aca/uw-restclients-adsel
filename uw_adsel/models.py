@@ -28,9 +28,7 @@ class Cohort(models.Model):
 
 
 class Decision(models.Model):
-    academic_qtr_id = models.IntegerField()
-    display_name = models.CharField(max_length=255)
-    assigned_count = models.IntegerField()
+    decision_name = models.CharField(max_length=255)
     decision_id = models.CharField(max_length=128)
 
 
@@ -78,6 +76,14 @@ class PurpleGoldApplication(Application):
     def json_data(self):
         return {'admissionSelectionId': int(self.adsel_id),
                 'awardAmount': self.award_amount}
+
+
+class DepartmentalDecisionApplication(Application):
+    decision_id = models.IntegerField()
+
+    def json_data(self):
+        return {'admissionSelectionId': int(self.adsel_id),
+                'departmentalDecisionId': self.decision_id}
 
 
 class Assignment(models.Model):
@@ -142,15 +148,12 @@ class PurpleGoldAssignment(Assignment):
 
 class DecisionAssignment(Assignment):
     decision = models.CharField()
-    override_previous = models.BooleanField()
-    override_protected = models.BooleanField()
 
     def json_data(self):
         applicant_json = []
         for application in self.applicants:
             applicant_json.append(application.json_data())
         return {'applicants': applicant_json,
-                'decision': self.decision,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),
