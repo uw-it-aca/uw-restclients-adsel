@@ -155,6 +155,8 @@ class DecisionAssignment(Assignment):
             applicant_json.append(application.json_data())
         return {'applicants': applicant_json,
                 'assignmentDetail': {'assignmentType': self.assignment_type,
+                                     'assignmentCategory':
+                                         "DepartmentalDecision",
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),
                                      'comments': self.comments,
