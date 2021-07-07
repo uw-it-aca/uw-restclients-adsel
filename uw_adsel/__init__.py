@@ -149,7 +149,7 @@ class AdSel(object):
         if assignment_type is not None:
             filters['assignmentType'] = assignment_type
         if application_type is not None:
-            filters['assignmentType'] = assignment_type
+            filters['applicationType'] = assignment_type
         if cohort is not None:
             filters['cohort'] = cohort
         if major is not None:
