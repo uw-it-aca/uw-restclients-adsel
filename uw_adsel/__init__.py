@@ -125,6 +125,7 @@ class AdSel(object):
             application.assigned_cohort = app['assignedCohort']
             application.assigned_major = app['assignedMajor']
             application.major_program_code = app['majorProgramCode']
+            application.application_type = app['applicationType']
             applications.append(application)
         return applications
 

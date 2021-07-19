@@ -93,6 +93,8 @@ class AdselTest(TestCase):
                                                                        156340,
                                                                        76711])
         self.assertEqual(len(applications), 6)
+        self.assertEqual(applications[0].application_type, "Postbac")
+        self.assertIsNone(applications[5].application_type)
 
     def test_post(self):
         a1 = Application()

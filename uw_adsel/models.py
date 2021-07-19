@@ -63,11 +63,13 @@ class Application(models.Model):
     assigned_cohort = models.IntegerField()
     assigned_major = models.CharField(max_length=32)
     major_program_code = models.CharField(max_length=255)
+    application_type = models.CharField(max_length=255)
 
     def json_data(self):
         return {'admissionSelectionId': int(self.adsel_id),
                 'applicationNbr': self.application_number,
-                'systemKey': int(self.system_key)}
+                'systemKey': int(self.system_key),
+                'applicationType': self.application_type}
 
 
 class PurpleGoldApplication(Application):

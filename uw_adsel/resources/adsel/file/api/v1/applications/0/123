@@ -7,7 +7,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
     "assignedMajor": "string",
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Transfer"
   },
   {
     "admissionsSelectionId": 34,
@@ -17,7 +18,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
     "assignedMajor": "string",
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Postbac"
   },
   {
     "admissionsSelectionId": 453,
@@ -27,7 +29,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
     "assignedMajor": "string",
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Postbac"
   },
   {
     "admissionsSelectionId": 345,
@@ -37,6 +40,7 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 0,
     "assignedMajor": "string",
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": null
   }
 ]
