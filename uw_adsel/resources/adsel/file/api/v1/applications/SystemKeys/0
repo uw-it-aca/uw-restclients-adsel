@@ -7,7 +7,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 1,
     "assignedMajor": null,
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Postbac"
   },
   {
     "admissionsSelectionId": 84136,
@@ -17,7 +18,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 2,
     "assignedMajor": "CSE",
-    "majorProgramCode": "0_CSE_123"
+    "majorProgramCode": "0_CSE_123",
+    "applicationType": "Transfer"
   },
   {
     "admissionsSelectionId": 45743,
@@ -27,7 +29,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 2,
     "assignedMajor": null,
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Transfer"
   },
   {
     "admissionsSelectionId": 73445,
@@ -37,7 +40,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": null,
     "assignedMajor": "CSE",
-    "majorProgramCode": "0_CSE_123"
+    "majorProgramCode": "0_CSE_123",
+    "applicationType": "Transfer"
   },
     {
     "admissionsSelectionId": 17508,
@@ -47,7 +51,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 1,
     "assignedMajor": null,
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Freshman"
   },
   {
     "admissionsSelectionId": 76512,
@@ -57,7 +62,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 2,
     "assignedMajor": "CSE",
-    "majorProgramCode": "0_CSE_123"
+    "majorProgramCode": "0_CSE_123",
+    "applicationType": "Freshman"
   },
   {
     "admissionsSelectionId": 35254,
@@ -67,7 +73,8 @@
     "academicQtrKeyId": 0,
     "assignedCohort": 2,
     "assignedMajor": null,
-    "majorProgramCode": null
+    "majorProgramCode": null,
+    "applicationType": "Freshman"
   },
   {
     "admissionsSelectionId": 27865,
@@ -77,6 +84,7 @@
     "academicQtrKeyId": 0,
     "assignedCohort": null,
     "assignedMajor": "CSE",
-    "majorProgramCode": "0_CSE_123"
+    "majorProgramCode": "0_CSE_123",
+    "applicationType": null
   }
 ]
