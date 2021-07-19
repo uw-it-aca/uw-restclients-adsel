@@ -150,6 +150,7 @@ class PurpleGoldAssignment(Assignment):
 
 class DecisionAssignment(Assignment):
     decision = models.CharField()
+    decision_number = models.IntegerField()
 
     def json_data(self):
         applicant_json = []
@@ -162,5 +163,6 @@ class DecisionAssignment(Assignment):
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),
                                      'comments': self.comments,
-                                     'decisionImportUser': self.user}
+                                     'decisionImportUser': self.user,
+                                     'decisionNumber': self.decision_number}
                 }

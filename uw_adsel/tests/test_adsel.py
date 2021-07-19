@@ -211,12 +211,14 @@ class AdselTest(TestCase):
         dd_assign.campus = 1
         dd_assign.comments = "My comment"
         dd_assign.user = "javerage"
+        dd_assign.decision_number = 1
 
         json_data = dd_assign.json_data()
         self.assertEqual(json_data['applicants'][0]['departmentalDecisionId'],
                          1)
         self.assertEqual(json_data['assignmentDetail']['assignmentCategory'],
                          "DepartmentalDecision")
+        self.assertEqual(json_data['assignmentDetail']['decisionNumber'], 1)
 
         try:
             submission = self.adsel.assign_decisions(dd_assign)
