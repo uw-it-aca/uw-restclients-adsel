@@ -199,6 +199,7 @@ class AdSel(object):
             acty.total_assigned = activity['totalAssigned']
             acty.assignment_category = activity['assignmentCategory']
             acty.decision_import_id = activity['decisionImportID']
+            acty.application_type = activity['applicationType']
             activities.append(acty)
         return activities
 

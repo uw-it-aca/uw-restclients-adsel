@@ -52,6 +52,7 @@ class Activity(models.Model):
     major_program_code = models.CharField(max_length=32)
     total_submitted = models.IntegerField()
     total_assigned = models.IntegerField()
+    application_type = models.CharField(max_length=128)
 
 
 class Application(models.Model):

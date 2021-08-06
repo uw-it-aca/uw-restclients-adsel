@@ -11,6 +11,7 @@
       "majorAbbr": null,
       "majorProgramCode": "",
       "assignmentCategory": "Cohort",
+      "applicationType": "Freshman",
       "totalSubmitted": 20,
       "totalAssigned": 19
     },
@@ -25,6 +26,7 @@
       "majorAbbr": null,
       "majorProgramCode": "",
       "assignmentCategory": "PuGo",
+      "applicationType": "Transfer",
       "totalSubmitted": 35,
       "totalAssigned": 35
     },
@@ -39,6 +41,7 @@
       "majorAbbr": "CSE",
       "majorProgramCode": "CSE",
       "assignmentCategory": "Major",
+      "applicationType": "Exchange",
       "totalSubmitted": 2,
       "totalAssigned": 2
     },
@@ -53,6 +56,7 @@
       "majorAbbr": "CHEM",
       "majorProgramCode": "CHEM",
       "assignmentCategory": "Major",
+      "applicationType": "Freshman",
       "totalSubmitted": 20044,
       "totalAssigned": 1547
     }
