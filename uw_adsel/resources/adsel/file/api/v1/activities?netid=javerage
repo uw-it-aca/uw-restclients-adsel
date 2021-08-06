@@ -10,6 +10,7 @@
       "majorAbbr": null,
       "majorProgramCode": "",
       "assignmentCategory": "Cohort",
+      "applicationType": "Freshman",
       "totalSubmitted": 20,
       "totalAssigned": 19
     },
@@ -23,6 +24,7 @@
       "majorAbbr": "CHEM",
       "majorProgramCode": "CHEM",
       "assignmentCategory": "Major",
+      "applicationType": "Freshman",
       "totalSubmitted": 20044,
       "totalAssigned": 1547
     }

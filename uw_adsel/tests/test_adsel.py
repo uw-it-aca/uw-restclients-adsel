@@ -57,6 +57,7 @@ class AdselTest(TestCase):
         self.assertEqual(activities[0].user, "javerage")
         self.assertEqual(activities[0].decision_import_id, 784)
         self.assertEqual(activities[0].assignment_category, "Cohort")
+        self.assertEqual(activities[0].application_type, "Freshman")
 
     def test_get_filtered_activities(self):
         # netid filter
