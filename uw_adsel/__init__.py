@@ -224,8 +224,9 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
-    def get_decisions(self, **kwargs):
-        url = "{}/departmentaldecisions".format(self.API)
+    def get_decisions(self, quarter_id, **kwargs):
+        url = "{}/departmentaldecisions/GetWithCounts?academicQtrKeyId={}"\
+            .format(self.API, quarter_id)
         response = self._get_resource(url)
         decisions = self._decisions_from_json(response)
         return decisions
@@ -236,6 +237,8 @@ class AdSel(object):
             decision_model = Decision()
             decision_model.decision_name = decision['departmentalDecision']
             decision_model.decision_id = decision['departmentalDecisionId']
+            decision_model.assigned_count1 = decision['assignedCount1']
+            decision_model.assigned_count2 = decision['assignedCount2']
             decisions.append(decision_model)
         return decisions
 

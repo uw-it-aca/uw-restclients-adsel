@@ -30,6 +30,8 @@ class Cohort(models.Model):
 class Decision(models.Model):
     decision_name = models.CharField(max_length=255)
     decision_id = models.CharField(max_length=128)
+    assigned_count1 = models.IntegerField()
+    assigned_count2 = models.IntegerField()
 
 
 class Quarter(models.Model):

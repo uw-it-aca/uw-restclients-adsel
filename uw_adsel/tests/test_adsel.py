@@ -187,11 +187,13 @@ class AdselTest(TestCase):
 
     def test_get_decisions(self):
         client = AdSel()
-        decisions = client.get_decisions()
+        decisions = client.get_decisions(1)
         self.assertEqual(len(decisions), 9)
         dec = decisions[3]
-        self.assertEqual(dec.decision_name, "Pending Decision")
-        self.assertEqual(dec.decision_id, 4)
+        self.assertEqual(dec.decision_name, "Denied, Not Selected")
+        self.assertEqual(dec.decision_id, 8)
+        self.assertEqual(dec.assigned_count1, 0)
+        self.assertEqual(dec.assigned_count2, 50)
 
     def test_decision_assignment(self):
         a1 = DepartmentalDecisionApplication()
