@@ -27,6 +27,7 @@ class AdselTest(TestCase):
         majors = self.adsel.get_majors_by_qtr(0)
         self.assertEqual(len(majors), 4)
         self.assertEqual(majors[1].major_abbr, "CHEM")
+        self.assertEqual(majors[1].assigned_freshman, 50)
         majors_unpaginated = self.adsel.get_majors_by_qtr(1)
         self.assertEqual(len(majors_unpaginated), 2)
 

@@ -14,6 +14,9 @@ class Major(models.Model):
     assigned_resident = models.IntegerField(null=True)
     assigned_nonresident = models.IntegerField(null=True)
     assigned_international = models.IntegerField(null=True)
+    assigned_freshman = models.IntegerField(null=True)
+    assigned_transfer = models.IntegerField(null=True)
+    assigned_postbac = models.IntegerField(null=True)
 
 
 class Cohort(models.Model):

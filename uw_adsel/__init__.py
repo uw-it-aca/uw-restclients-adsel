@@ -289,6 +289,12 @@ class AdSel(object):
             major.assigned_nonresident = major_data['nonResidentCount']
         except KeyError:
             pass
+        try:
+            major.assigned_freshman = major_data['freshmanCount']
+            major.assigned_transfer = major_data['transferCount']
+            major.assigned_postbac = major_data['postBacCount']
+        except KeyError:
+            pass
         return major
 
     def _get_resource(self, url):

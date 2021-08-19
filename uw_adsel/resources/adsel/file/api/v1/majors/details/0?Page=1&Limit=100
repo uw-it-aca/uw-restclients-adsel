@@ -7,8 +7,14 @@
 			"division": "3A",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 32,
-			"majorProgramCode": "0_BIOL_1"
+			"majorProgramCode": "0_BIOL_1",
+            "assignedCount": 120,
+            "residentCount": 20,
+            "nonResidentCount": 50,
+            "internationalCount": 0,
+            "freshmanCount": 0,
+            "transferCount": 50,
+            "postBacCount": 0
 		},
 		{
 			"majorAbbr": "CHEM",
@@ -18,8 +24,14 @@
 			"division": "6B2",
 			"majorPathway": 0,
 			"dtx": "string",
-			"assignedCount": 0,
-			"majorProgramCode": "0_CHEM_1"
+			"majorProgramCode": "0_CHEM_1",
+            "assignedCount": 220,
+            "residentCount": 20,
+            "nonResidentCount": 50,
+            "internationalCount": 50,
+            "freshmanCount": 50,
+            "transferCount": 50,
+            "postBacCount": 0
 		}
 	],
 	"nextPage": "https://foobartest.uw.edu/api/v1/majors/details/20194?Page=2&Limit=100",
