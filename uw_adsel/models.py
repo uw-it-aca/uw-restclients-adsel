@@ -28,6 +28,9 @@ class Cohort(models.Model):
     protected_group = models.BooleanField()
     active_cohort = models.BooleanField()
     assigned_count = models.IntegerField()
+    assigned_freshman = models.IntegerField(null=True)
+    assigned_transfer = models.IntegerField(null=True)
+    assigned_postbac = models.IntegerField(null=True)
 
 
 class Decision(models.Model):

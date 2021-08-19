@@ -221,6 +221,9 @@ class AdSel(object):
             cohort_model.protected_group = cohort['protectedGroupInd']
             cohort_model.active_cohort = cohort['activeCohortInd']
             cohort_model.assigned_count = cohort['assignedCount']
+            cohort_model.assigned_freshman = cohort['freshmanCount']
+            cohort_model.assigned_transfer = cohort['transferCount']
+            cohort_model.assigned_postbac = cohort['postBacCount']
             cohorts.append(cohort_model)
         return cohorts
 

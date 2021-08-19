@@ -45,6 +45,7 @@ class AdselTest(TestCase):
         self.assertEqual(cohorts[1].cohort_description,
                          "This is another cohort")
         cohorts_unpaginated = self.adsel.get_cohorts_by_qtr(1)
+        self.assertEqual(cohorts_unpaginated[1].assigned_postbac, 86)
         self.assertEqual(len(cohorts_unpaginated), 2)
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)

@@ -7,7 +7,10 @@
 			"admitDecision": "Decision text",
 			"protectedGroupInd": true,
 			"activeCohortInd": true,
-			"assignedCount": 120
+			"assignedCount": 120,
+			"freshmanCount": 0,
+			"transferCount": 0,
+			"postBacCount": 0
 		},
 		{
 			"academicQtrKeyId": 1,
@@ -17,7 +20,10 @@
 			"admitDecision": "Decision text",
 			"protectedGroupInd": false,
 			"activeCohortInd": true,
-			"assignedCount": 0
+			"assignedCount": 0,
+			"freshmanCount": 0,
+			"transferCount": 20,
+			"postBacCount": 86
 		}
 	],
 	"nextPage": "1",
