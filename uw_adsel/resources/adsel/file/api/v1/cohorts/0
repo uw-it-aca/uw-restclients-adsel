@@ -1,5 +1,6 @@
 {
-	"cohorts": [{
+	"cohorts": [
+		{
 			"academicQtrKeyId": 0,
 			"cohortNbr": 1,
 			"cohortDescription": "This is a Cohort",
@@ -7,7 +8,10 @@
 			"admitDecision": "Decision text",
 			"protectedGroupInd": true,
 			"activeCohortInd": true,
-			"assignedCount": 120
+			"assignedCount": 120,
+			"freshmanCount": 0,
+			"transferCount": 0,
+			"postBacCount": 10
 		},
 		{
 			"academicQtrKeyId": 0,
@@ -17,7 +21,10 @@
 			"admitDecision": "Decision text",
 			"protectedGroupInd": false,
 			"activeCohortInd": true,
-			"assignedCount": 0
+			"assignedCount": 0,
+			"freshmanCount": 0,
+			"transferCount": 0,
+			"postBacCount": 0
 		}
 	],
 	"nextPage": "2",

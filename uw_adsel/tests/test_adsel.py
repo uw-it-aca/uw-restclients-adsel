@@ -27,6 +27,7 @@ class AdselTest(TestCase):
         majors = self.adsel.get_majors_by_qtr(0)
         self.assertEqual(len(majors), 4)
         self.assertEqual(majors[1].major_abbr, "CHEM")
+        self.assertEqual(majors[1].assigned_freshman, 50)
         majors_unpaginated = self.adsel.get_majors_by_qtr(1)
         self.assertEqual(len(majors_unpaginated), 2)
 
@@ -44,6 +45,7 @@ class AdselTest(TestCase):
         self.assertEqual(cohorts[1].cohort_description,
                          "This is another cohort")
         cohorts_unpaginated = self.adsel.get_cohorts_by_qtr(1)
+        self.assertEqual(cohorts_unpaginated[1].assigned_postbac, 86)
         self.assertEqual(len(cohorts_unpaginated), 2)
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)

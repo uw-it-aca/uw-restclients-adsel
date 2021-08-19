@@ -221,6 +221,9 @@ class AdSel(object):
             cohort_model.protected_group = cohort['protectedGroupInd']
             cohort_model.active_cohort = cohort['activeCohortInd']
             cohort_model.assigned_count = cohort['assignedCount']
+            cohort_model.assigned_freshman = cohort['freshmanCount']
+            cohort_model.assigned_transfer = cohort['transferCount']
+            cohort_model.assigned_postbac = cohort['postBacCount']
             cohorts.append(cohort_model)
         return cohorts
 
@@ -287,6 +290,12 @@ class AdSel(object):
             major.assigned_international = major_data['internationalCount']
             major.assigned_resident = major_data['residentCount']
             major.assigned_nonresident = major_data['nonResidentCount']
+        except KeyError:
+            pass
+        try:
+            major.assigned_freshman = major_data['freshmanCount']
+            major.assigned_transfer = major_data['transferCount']
+            major.assigned_postbac = major_data['postBacCount']
         except KeyError:
             pass
         return major
