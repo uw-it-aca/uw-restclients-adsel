@@ -229,3 +229,37 @@ class AdselTest(TestCase):
             submission = self.adsel.assign_decisions(dd_assign)
         except Exception:
             self.fail('assign_decisions raised an exception')
+
+    def test_admin_majors(self):
+        client = AdSel()
+        majors = client.get_admin_majors()
+        self.assertEqual(len(majors), 5)
+        self.assertEqual(majors[1].college, 'C')
+
+    def test_admin_major(self):
+        client = AdSel()
+        major = client.get_admin_major_by_id(1)
+        self.assertEqual(major.display_name, 'Aeronautics & Astronautics')
+        self.assertIsNone(major.directToMajorInd)
+        self.assertEqual(major.majorDegreeLevel, 1)
+
+    def test_admin_majorvalues(self):
+        client = AdSel()
+        mv = client.get_admin_majorvalues()
+        self.assertIn("directToX", mv)
+        self.assertEqual(mv['directToX'][1]['name'], 'College')
+        self.assertEqual(mv['directToX'][1]['id'],
+                         'Direct to College - Engineering')
+
+    def test_admin_cohort(self):
+        client = AdSel()
+        cohort = client.get_admin_cohort_by_qtr_id(20201, 0)
+        self.assertEqual(cohort.cohort_number, 0)
+        self.assertEqual(cohort.record_updated, "2020-12-03T01:28:58.67")
+
+    def test_admin_cohorts(self):
+        client = AdSel()
+        cohorts = client.get_admin_cohorts_by_qtr(20194)
+        self.assertEqual(len(cohorts), 3)
+        self.assertEqual(cohorts[1].cohort_description,
+                         "Failed Assignment - Under 16")

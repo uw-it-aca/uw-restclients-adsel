@@ -175,3 +175,63 @@ class DecisionAssignment(Assignment):
                                      'decisionImportUser': self.user,
                                      'decisionNumber': self.decision_number}
                 }
+
+
+class AdminMajor(models.Model):
+    major_id = models.IntegerField()
+    major_abbr = models.CharField(max_length=32)
+    begin_academic_qtr_key_id = models.IntegerField()
+    end_academic_qtr_key_id = models.IntegerField()
+    major_pathway = models.IntegerField()
+    display_name = models.CharField(max_length=255)
+    college = models.CharField(max_length=255)
+    division = models.CharField(max_length=255)
+    dtx = models.CharField(max_length=255)
+    dtx_desc = models.CharField(max_length=255)
+    directToMajorInd = models.BooleanField()
+    directToCollegeInd = models.IntegerField()
+    majorDegreeLevel = models.IntegerField()
+    majorDegreeType = models.IntegerField()
+    assignedMajorAbbr = models.CharField(max_length=255)
+    assignedMajorDegreeLevel = models.IntegerField()
+    assignedMajorDegreeType = models.IntegerField()
+    majorAssignedName = models.CharField(max_length=255)
+    assignedMajorPathway = models.IntegerField()
+
+    def json_data(self):
+        return {
+            "id": self.major_id,
+            "majorAbbr": self.major_abbr,
+            "beginAcademicQtrKeyId": self.begin_academic_qtr_key_id,
+            "endAcademicQtrKeyId": self.end_academic_qtr_key_id,
+            "majorPathway": self.major_pathway,
+            "displayName": self.display_name,
+            "collegeCode": self.college,
+            "collegeDivision": self.division,
+            "directToXType": self.dtx,
+            "directToXDesc": self.dtx_desc,
+            "directToMajorInd": self.directToMajorInd,
+            "directToCollegeInd": self.directToCollegeInd,
+            "majorDegreeLevel": self.majorDegreeLevel,
+            "majorDegreeType": self.majorDegreeType,
+            "assignedMajorAbbr": self.assignedMajorAbbr,
+            "assignedMajorDegreeLevel": self.assignedMajorDegreeLevel,
+            "assignedMajorDegreeType": self.assignedMajorDegreeType,
+            "majorAssignedName": self.majorAssignedName,
+            "assignedMajorPathway": self.assignedMajorPathway
+        }
+
+
+class AdminCohort(models.Model):
+    academic_qtr_id = models.IntegerField()
+    cohort_number = models.IntegerField()
+    cohort_description = models.TextField()
+    cohort_residency = models.CharField(max_length=255)
+    cohort_campus = models.IntegerField()
+    cohort_application_type = models.IntegerField()
+    admit_decision = models.CharField(max_length=255)
+    protected_group = models.BooleanField()
+    enforce_exceptions = models.BooleanField()
+    active_cohort = models.BooleanField()
+    record_updated = models.DateTimeField()
+    record_update_user = models.CharField(max_length=255)
