@@ -8,7 +8,7 @@ from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
-    Decision, AdminMajor
+    Decision, AdminMajor, AdminCohort
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -345,17 +345,67 @@ class AdSel(object):
                       }
         return AdminMajor(**major_data)
 
-        return
-    # def get_admin_majorvalues(self):
-    # def post_admin_major(self):
-    # def put_admin_major(self):
-    # def get_admin_cohorts_by_qtr(self):
-    # def get_admin_cohort_by_qtr_id(self):
-    #
-    # def _cohort_from_admin_cohort(self):
-    # def post_admin_cohort(self):
-    # def put_admin_cohort(self):
-    # def copy_cohort(self):
+    def get_admin_majorvalues(self):
+        url = "{}/admin/majorvalues".format(self.API)
+        response = self._get_resource(url)
+        return response
+
+    def post_admin_major(self, major):
+        url = "{}/admin/major".format(self.API)
+        return self._post_resource(url, major.json_data())
+
+    def put_admin_major(self, major):
+        url = "{}/admin/major".format(self.API)
+        return self._put_resource(url, major.json_data())
+
+    def get_admin_cohorts_by_qtr(self, qtr):
+        url = "{}/admin/cohorts/{}".format(self.API, qtr)
+        response = self._get_resource(url)
+        cohorts = self._cohorts_from_admin_cohorts(response)
+        return cohorts
+
+    def get_admin_cohort_by_qtr_id(self, qtr, id):
+        url = "{}/admin/cohorts/{}/{}".format(self.API, qtr, id)
+        response = self._get_resource(url)
+        cohort = self._cohort_from_admin_cohort(response)
+        return cohort
+
+    def _cohorts_from_admin_cohorts(self, response):
+        cohorts = []
+        for cohort in response:
+            cohorts.append(self._cohort_from_admin_cohort(cohort))
+        return cohorts
+
+    def _cohort_from_admin_cohort(self, response):
+        cohort_data = {"academic_qtr_id": response['academicQtrKeyId'],
+                       "cohort_number": response['cohortNbr'],
+                       "cohort_description": response['cohortDescription'],
+                       "cohort_residency": response['cohortResidency'],
+                       "cohort_campus": response['cohortCampus'],
+                       "cohort_application_type":
+                           response['cohortApplicationType'],
+                       "admit_decision": response['admitDecision'],
+                       "protected_group": response['protectedGroupInd'],
+                       "enforce_exceptions": response['enforceExceptionsInd'],
+                       "active_cohort": response['activeCohortInd'],
+                       "record_updated": response['recordUpdateDateTime'],
+                       "record_update_user": response['recordUpdateUser'],
+                       }
+        return AdminCohort(**cohort_data)
+
+    def post_admin_cohort(self, cohort):
+        url = "{}/admin/cohort".format(self.API)
+        return self._post_resource(url, cohort.json_data())
+
+    def put_admin_cohort(self, cohort):
+        url = "{}/admin/cohort".format(self.API)
+        return self._put_resource(url, cohort.json_data())
+
+    def copy_cohort(self, from_cohort_id, to_cohort_id):
+        url = "{}/admin/cohort/copy/{}/{}".format(self.API,
+                                                  from_cohort_id,
+                                                  to_cohort_id)
+        self._post_resource(url, {})
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())
@@ -370,6 +420,16 @@ class AdSel(object):
         response = self.DAO.postURL(url,
                                     self._post_headers(),
                                     body=json.dumps(request))
+        if response.status not in [200, 201]:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+
+        return json.loads(response.data)
+
+    def _put_resource(self, url, request):
+        response = self.DAO.putURL(url,
+                                   self._post_headers(),
+                                   body=json.dumps(request))
         if response.status not in [200, 201]:
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
