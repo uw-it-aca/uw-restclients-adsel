@@ -8,7 +8,7 @@ from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
-    Decision
+    Decision, AdminMajor
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -299,6 +299,63 @@ class AdSel(object):
         except KeyError:
             pass
         return major
+
+    def get_admin_majors(self):
+        url = "{}/admin/majors".format(self.API)
+        response = self._get_resource(url)
+        majors = self._majors_from_admin_majors(response)
+        return majors
+
+    def get_admin_major_by_id(self, id):
+        url = "{}/admin/major/{}".format(self.API, id)
+        response = self._get_resource(url)
+        major = self._major_from_admin_major(response)
+        return major
+
+    def _majors_from_admin_majors(self, response):
+        majors = []
+        for major in response:
+            majors.append(self._major_from_admin_major(major))
+        return majors
+
+    def _major_from_admin_major(self, response):
+        major_data = {'major_id': response['id'],
+                      'major_abbr': response['majorAbbr'],
+                      'begin_academic_qtr_key_id':
+                          response['beginAcademicQtrKeyId'],
+                      'end_academic_qtr_key_id':
+                          response['endAcademicQtrKeyId'],
+                      'major_pathway': response['majorPathway'],
+                      'display_name': response['displayName'],
+                      'college': response['collegeCode'],
+                      'division': response['collegeDivision'],
+                      'dtx': response['directToXType'],
+                      'dtx_desc': response['directToXDesc'],
+                      'directToMajorInd': response['directToMajorInd'],
+                      'directToCollegeInd': response['directToCollegeInd'],
+                      'majorDegreeLevel': response['majorDegreeLevel'],
+                      'majorDegreeType': response['majorDegreeType'],
+                      'assignedMajorAbbr': response['assignedMajorAbbr'],
+                      'assignedMajorDegreeLevel':
+                          response['assignedMajorDegreeLevel'],
+                      'assignedMajorDegreeType':
+                          response['assignedMajorDegreeType'],
+                      'majorAssignedName': response['majorAssignedName'],
+                      'assignedMajorPathway': response['assignedMajorPathway'],
+                      }
+        return AdminMajor(**major_data)
+
+        return
+    # def get_admin_majorvalues(self):
+    # def post_admin_major(self):
+    # def put_admin_major(self):
+    # def get_admin_cohorts_by_qtr(self):
+    # def get_admin_cohort_by_qtr_id(self):
+    #
+    # def _cohort_from_admin_cohort(self):
+    # def post_admin_cohort(self):
+    # def put_admin_cohort(self):
+    # def copy_cohort(self):
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())

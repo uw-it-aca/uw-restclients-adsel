@@ -229,3 +229,16 @@ class AdselTest(TestCase):
             submission = self.adsel.assign_decisions(dd_assign)
         except Exception:
             self.fail('assign_decisions raised an exception')
+
+    def test_admin_majors(self):
+        client = AdSel()
+        majors = client.get_admin_majors()
+        self.assertEqual(len(majors), 5)
+        self.assertEqual(majors[1].college, 'C')
+
+    def test_admin_major(self):
+        client = AdSel()
+        major = client.get_admin_major_by_id(1)
+        self.assertEqual(major.display_name, 'Aeronautics & Astronautics')
+        self.assertIsNone(major.directToMajorInd)
+        self.assertEqual(major.majorDegreeLevel, 1)

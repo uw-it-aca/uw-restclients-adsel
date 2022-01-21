@@ -175,3 +175,25 @@ class DecisionAssignment(Assignment):
                                      'decisionImportUser': self.user,
                                      'decisionNumber': self.decision_number}
                 }
+
+
+class AdminMajor(models.Model):
+    major_id = models.IntegerField()
+    major_abbr = models.CharField(max_length=32)
+    begin_academic_qtr_key_id = models.IntegerField()
+    end_academic_qtr_key_id = models.IntegerField()
+    major_pathway = models.IntegerField()
+    display_name = models.CharField(max_length=255)
+    college = models.CharField(max_length=255)
+    division = models.CharField(max_length=255)
+    dtx = models.CharField(max_length=255)
+    dtx_desc = models.CharField(max_length=255)
+    directToMajorInd = models.BooleanField()
+    directToCollegeInd = models.IntegerField()
+    majorDegreeLevel = models.IntegerField()
+    majorDegreeType = models.IntegerField()
+    assignedMajorAbbr = models.CharField(max_length=255)
+    assignedMajorDegreeLevel = models.IntegerField()
+    assignedMajorDegreeType = models.IntegerField()
+    majorAssignedName = models.CharField(max_length=255)
+    assignedMajorPathway = models.IntegerField()
