@@ -246,7 +246,7 @@ class AdminCohort(models.Model):
             "cohort_application_type": self.cohort_application_type,
             "admit_decision": self.admit_decision,
             "protected_group": self.protected_group,
-            "enforce_exceptions": self.enforce_exception,
+            "enforce_exceptions": self.enforce_exceptions,
             "active_cohort": self.active_cohort,
             "record_updated": self.record_updated,
             "record_update_user": self.record_update_user
