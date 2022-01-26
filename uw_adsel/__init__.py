@@ -405,7 +405,7 @@ class AdSel(object):
         url = "{}/admin/cohort/copy/{}/{}".format(self.API,
                                                   from_cohort_id,
                                                   to_cohort_id)
-        self._post_resource(url, {})
+        return self._post_resource(url, {})
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())

@@ -235,3 +235,19 @@ class AdminCohort(models.Model):
     active_cohort = models.BooleanField()
     record_updated = models.DateTimeField()
     record_update_user = models.CharField(max_length=255)
+
+    def json_data(self):
+        return {
+            "academic_qtr_id": self.academic_qtr_id,
+            "cohort_number": self.cohort_number,
+            "cohort_description": self.cohort_description,
+            "cohort_residency": self.cohort_residency,
+            "cohort_campus": self.cohort_campus,
+            "cohort_application_type": self.cohort_application_type,
+            "admit_decision": self.admit_decision,
+            "protected_group": self.protected_group,
+            "enforce_exceptions": self.enforce_exception,
+            "active_cohort": self.active_cohort,
+            "record_updated": self.record_updated,
+            "record_update_user": self.record_update_user
+        }
