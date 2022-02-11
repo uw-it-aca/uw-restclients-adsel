@@ -238,16 +238,16 @@ class AdminCohort(models.Model):
 
     def json_data(self):
         return {
-            "academic_qtr_id": self.academic_qtr_id,
-            "cohort_number": self.cohort_number,
-            "cohort_description": self.cohort_description,
-            "cohort_residency": self.cohort_residency,
-            "cohort_campus": self.cohort_campus,
-            "cohort_application_type": self.cohort_application_type,
-            "admit_decision": self.admit_decision,
-            "protected_group": self.protected_group,
-            "enforce_exceptions": self.enforce_exceptions,
-            "active_cohort": self.active_cohort,
-            "record_updated": self.record_updated,
-            "record_update_user": self.record_update_user
+            "academicQtrKeyId": self.academic_qtr_id,
+            "cohortNbr": self.cohort_number,
+            "cohortDescription": self.cohort_description,
+            "cohortResidency": self.cohort_residency,
+            "cohortCampus": self.cohort_campus,
+            "cohortApplicationType": self.cohort_application_type,
+            "admitDecision": self.admit_decision,
+            "protectedGroupInd": self.protected_group,
+            "enforceExceptionsInd": self.enforce_exceptions,
+            "activeCohortInd": self.active_cohort,
+            "recordUpdateDateTime": self.record_updated,
+            "recordUpdateUser": self.record_update_user
         }
