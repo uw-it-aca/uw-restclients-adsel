@@ -407,6 +407,12 @@ class AdSel(object):
                                                   to_cohort_id)
         return self._post_resource(url, {})
 
+    def get_periods_without_cohorts(self):
+        url = "{}/academicqtr/WithoutCohorts".format(self.API)
+        response = self._get_resource(url)
+        quarters = self._quarters_from_json(response)
+        return quarters
+
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())
 
