@@ -1,0 +1,200 @@
+{
+	"residentGroup": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"pqa": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"residency": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"modifiedResidency": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"residentCategory": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"applicationType": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"admissionsRecommendation": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"academics": [{
+		"value": "string",
+		"text": "string"
+	}],
+	"academicFilters": {
+		"math": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"cadrTotalDeficiencies": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"requestedMajor": {
+		"requestedMajor1Name": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor1College": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor1CollegeDivision": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor1Category": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor2Name": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor2College": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor2CollegeDivision": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"requestedMajor2Category": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"statusAndReason": {
+		"sdbApplicationStatus": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"sdbApplicationStatusCategory": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"reasonCode": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"assignedCohortAndMajor": {
+		"sdbCohort": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"assignedCohort": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"sdbAssignedMajor1Name": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"adselAssignedMajorName": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"departmentalDecision1": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"departmentalDecision2": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"raceEthnicity": {
+		"verifiedNativeAmerican": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"underRepresentedMinority": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"transfer": {
+		"highSchoolGPAStatus": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"transferType": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"lastSchool": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"projectedClassStanding": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"waAssociateDegree": [{
+			"value": "string",
+			"text": "string"
+		}]
+	},
+	"internationalScores": {
+		"ielts": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"ieltsl": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"ieltss": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"ieltsw": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"duolingo": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"englishLanguageProficiency": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"toefli": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"toeflir": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"toeflis": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"toefliw": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"ieltsr": [{
+			"value": "string",
+			"text": "string"
+		}],
+		"toeflil": [{
+			"value": "string",
+			"text": "string"
+		}]
+	}
+}

@@ -413,6 +413,18 @@ class AdSel(object):
         quarters = self._quarters_from_json(response)
         return quarters
 
+    def get_filter_values(self, year=None, quarter=None, report_view=None):
+        url = "{}/filter".format(self.API)
+        filters = {"academicYr": year,
+                   "academicQtr": quarter,
+                   "reportView": report_view}
+        params = {k: v for k, v in filters.items() if v is not None}
+        filter_url = urllib.parse.urlencode(params)
+        if len(filter_url) > 0:
+            url = url + "?" + filter_url
+        response = self._get_resource(url)
+        return response
+
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())
 
