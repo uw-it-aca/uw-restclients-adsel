@@ -263,3 +263,11 @@ class AdselTest(TestCase):
         self.assertEqual(len(cohorts), 3)
         self.assertEqual(cohorts[1].cohort_description,
                          "Failed Assignment - Under 16")
+
+    def test_filter_values(self):
+        client = AdSel()
+        filters = client.get_filter_values()
+        self.assertEqual(len(filters), 15)
+        self.assertEqual(len(filters['internationalScores'].items()), 12)
+        with self.assertRaises(DataFailureException):
+            client.get_filter_values(year=2022)
