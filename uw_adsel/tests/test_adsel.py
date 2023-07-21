@@ -297,4 +297,4 @@ class AdselTest(TestCase):
 
     def test_get_worspaces_by_qtr(self):
         workspaces = AdSel().get_workspaces_by_qtr(20194)
-        self.assertEqual(len(workspaces), 9a)
+        self.assertEqual(len(workspaces), 9)
