@@ -271,3 +271,26 @@ class AdselTest(TestCase):
         self.assertEqual(len(filters['internationalScores'].items()), 12)
         with self.assertRaises(DataFailureException):
             client.get_filter_values(year=2022)
+
+    def test_workspaces_from_json(self):
+        json = [{
+            "academicQtrKeyId": 20194,
+            "workspaceId": 1,
+            "workspaceName": "My Workspace",
+            "ownerAlias": "javerage"
+        },
+            {
+                "academicQtrKeyId": 20194,
+                "workspaceId": 2,
+                "workspaceName": "Demo Workspace",
+                "ownerAlias": "javerage"
+            }]
+
+        workspaces = AdSel()._workspaces_from_json(json)
+        self.assertEqual(len(workspaces), 2)
+        self.assertEqual(workspaces[0].workspace_id, 1)
+        self.assertEqual(workspaces[0].workspace_name, "My Workspace")
+        self.assertEqual(workspaces[0].owner_alias, "javerage")
+        self.assertEqual(workspaces[0].academic_qtr_key_id, 20194)
+
+
