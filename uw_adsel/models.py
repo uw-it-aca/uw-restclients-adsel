@@ -251,3 +251,18 @@ class AdminCohort(models.Model):
             "recordUpdateDateTime": self.record_updated,
             "recordUpdateUser": self.record_update_user
         }
+
+
+class Workspace(models.Model):
+    academic_qtr_id = models.IntegerField()
+    workspace_id = models.IntegerField()
+    workspace_name = models.CharField(max_length=255)
+    owner_alias = models.CharField(max_length=255)
+
+    def json_data(self):
+        return {
+            "academicQtrKeyId": self.academic_qtr_id,
+            "workspaceId": self.workspace_id,
+            "workspaceName": self.workspace_name,
+            "ownerAlias": self.owner_alias
+        }
