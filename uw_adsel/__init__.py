@@ -8,7 +8,7 @@ from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
-    Decision, AdminMajor, AdminCohort
+    Decision, AdminMajor, AdminCohort, Workspace
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -424,6 +424,26 @@ class AdSel(object):
             url = url + "?" + filter_url
         response = self._get_resource(url)
         return response
+
+    def create_workspace(self, workspace):
+        url = "{}/admin/workspace".format(self.API)
+        return self._post_resource(url, workspace.json_data())
+
+    def get_workspaces_by_qtr(self, qtr):
+        url = "{}/workspaces/{}".format(self.API, qtr)
+        response = self._get_resource(url)
+        workspaces = self._workspaces_from_json(response)
+        return workspaces
+
+    def _workspaces_from_json(self, response):
+        workspaces = []
+        for workspace in response:
+            json_data = {'academic_qtr_id': workspace['academicQtrKeyId'],
+                         'workspace_id': workspace['workspaceId'],
+                         'workspace_name': workspace['workspaceName'],
+                         'owner_alias': workspace['ownerAlias']}
+            workspaces.append(Workspace(**json_data))
+        return workspaces
 
     def _get_resource(self, url):
         response = self.DAO.getURL(url, self._headers())
