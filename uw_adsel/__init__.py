@@ -429,6 +429,12 @@ class AdSel(object):
         url = "{}/admin/workspace".format(self.API)
         return self._post_resource(url, workspace.json_data())
 
+    def duplicate_workspace(self, workspace_id, workspace_name):
+        url = "{}/admin/workspace/duplicate".format(self.API)
+        return self._post_resource(url,
+                                   {"duplicateWorkspaceName": workspace_name,
+                                    "workspaceId": workspace_id})
+
     def get_workspaces_by_qtr(self, qtr):
         url = "{}/workspaces/{}".format(self.API, qtr)
         response = self._get_resource(url)
