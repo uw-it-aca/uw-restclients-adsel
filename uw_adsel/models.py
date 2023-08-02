@@ -104,6 +104,7 @@ class Assignment(models.Model):
     comments = models.TextField()
     user = models.CharField(max_length=12)
     applicants = []
+    workspace_id = models.IntegerField()
 
 
 class CohortAssignment(Assignment):
@@ -123,7 +124,8 @@ class CohortAssignment(Assignment):
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),
                                      'comments': self.comments,
-                                     'decisionImportUser': self.user}
+                                     'decisionImportUser': self.user,
+                                     'workspaceId': self.workspace_id}
                 }
 
 
@@ -140,7 +142,8 @@ class MajorAssignment(Assignment):
                                      'academicQtrKeyId': self.quarter,
                                      'campus': int(self.campus),
                                      'comments': self.comments,
-                                     'decisionImportUser': self.user}
+                                     'decisionImportUser': self.user,
+                                     'workspaceId': self.workspace_id}
                 }
 
 
@@ -153,7 +156,8 @@ class PurpleGoldAssignment(Assignment):
                 'assignmentDetail': {'assignmentType': self.assignment_type,
                                      'academicQtrKeyId': self.quarter,
                                      'comments': self.comments,
-                                     'decisionImportUser': self.user}
+                                     'decisionImportUser': self.user,
+                                     'workspaceId': self.workspace_id}
                 }
 
 
@@ -173,7 +177,8 @@ class DecisionAssignment(Assignment):
                                      'campus': int(self.campus),
                                      'comments': self.comments,
                                      'decisionImportUser': self.user,
-                                     'decisionNumber': self.decision_number}
+                                     'decisionNumber': self.decision_number,
+                                     'workspaceId': self.workspace_id}
                 }
 
 
