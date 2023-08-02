@@ -119,10 +119,12 @@ class AdselTest(TestCase):
         cohort_assign.campus = 1
         cohort_assign.comments = "My comment"
         cohort_assign.user = "javerage"
+        cohort_assign.workspace_id = 1
 
         cohort_json = cohort_assign.json_data()
         self.assertEqual(cohort_json['overridePreviousCohort'], False)
         self.assertEqual(cohort_json['overridePreviousProtectedCohort'], True)
+        self.assertEqual(cohort_json['assignmentDetail']['workspaceId'], 1)
 
         try:
             submission = self.adsel.assign_cohorts_bulk(cohort_assign)
@@ -137,11 +139,13 @@ class AdselTest(TestCase):
         major_assign.campus = 1
         major_assign.comments = "My comment"
         major_assign.user = "javerage"
+        major_assign.workspace_id = 1
 
         major_json = major_assign.json_data()
         self.assertEqual(len(major_json['applicants']), 2)
         self.assertEqual(major_json['applicants'][0]['admissionSelectionId'],
                          123)
+        self.assertEqual(major_json['assignmentDetail']['workspaceId'], 1)
 
         try:
             submission = self.adsel.assign_majors(major_assign)
@@ -171,9 +175,11 @@ class AdselTest(TestCase):
         purple_gold_assign.campus = 1
         purple_gold_assign.comments = "My comment"
         purple_gold_assign.user = "javerage"
+        purple_gold_assign.workspace_id = 1
 
         json_data = purple_gold_assign.json_data()
         self.assertEqual(json_data['applicants'][0]['awardAmount'], 1000)
+        self.assertEqual(json_data['assignmentDetail']['workspaceId'], 1)
 
         try:
             submission = self.adsel.assign_purple_gold(purple_gold_assign)
@@ -217,6 +223,7 @@ class AdselTest(TestCase):
         dd_assign.comments = "My comment"
         dd_assign.user = "javerage"
         dd_assign.decision_number = 1
+        dd_assign.workspace_id = 1
 
         json_data = dd_assign.json_data()
         self.assertEqual(json_data['applicants'][0]['departmentalDecisionId'],
@@ -224,6 +231,7 @@ class AdselTest(TestCase):
         self.assertEqual(json_data['assignmentDetail']['assignmentCategory'],
                          "DepartmentalDecision")
         self.assertEqual(json_data['assignmentDetail']['decisionNumber'], 1)
+        self.assertEqual(json_data['assignmentDetail']['workspaceId'], 1)
 
         try:
             submission = self.adsel.assign_decisions(dd_assign)
