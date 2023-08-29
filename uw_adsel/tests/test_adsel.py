@@ -31,6 +31,10 @@ class AdselTest(TestCase):
         majors_unpaginated = self.adsel.get_majors_by_qtr(1)
         self.assertEqual(len(majors_unpaginated), 2)
 
+        workspace_majors = self.adsel.get_majors_by_qtr(0, 1)
+        self.assertEqual(len(workspace_majors), 2)
+        self.assertEqual(workspace_majors[1].assigned_count, 721)
+
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_quarters(self, mock_obj):
         quarters = self.adsel.get_quarters()
@@ -47,6 +51,9 @@ class AdselTest(TestCase):
         cohorts_unpaginated = self.adsel.get_cohorts_by_qtr(1)
         self.assertEqual(cohorts_unpaginated[1].assigned_postbac, 86)
         self.assertEqual(len(cohorts_unpaginated), 2)
+
+        workspace_cohorts = self.adsel.get_cohorts_by_qtr(0, workspace_id=1)
+        self.assertEqual(len(workspace_cohorts), 2)
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_now(self, mock_obj):
@@ -193,6 +200,11 @@ class AdselTest(TestCase):
         self.assertEqual(major_details.assigned_international, 0)
         self.assertEqual(major_details.assigned_resident, 12412)
 
+        ws_major_details = client.get_major_details_by_qtr_major(0,
+                                                                 "0_CSE_1",
+                                                                 1)
+        self.assertEqual(ws_major_details.assigned_resident, 952)
+
     def test_get_decisions(self):
         client = AdSel()
         decisions = client.get_decisions(1)
@@ -202,6 +214,10 @@ class AdselTest(TestCase):
         self.assertEqual(dec.decision_id, 8)
         self.assertEqual(dec.assigned_count1, 0)
         self.assertEqual(dec.assigned_count2, 50)
+
+        ws_decisions = client.get_decisions(0, 1)
+        self.assertEqual(len(ws_decisions), 8)
+        self.assertEqual(ws_decisions[0].assigned_count1, 6)
 
     def test_decision_assignment(self):
         a1 = DepartmentalDecisionApplication()
