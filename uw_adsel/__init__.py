@@ -142,7 +142,8 @@ class AdSel(object):
                                 assignment_period=None,
                                 comment=None,
                                 assingment_category=None,
-                                application_type=None):
+                                application_type=None,
+                                workspace_id=None):
         url = "{}/activities".format(self.API)
         filters = {}
         if netid is not None:
@@ -171,6 +172,8 @@ class AdSel(object):
             filters['comment'] = comment
         if assingment_category is not None:
             filters['assignmentCategory'] = assingment_category
+        if workspace_id is not None:
+            filters['workspaceId'] = workspace_id
         filter_url = urllib.parse.urlencode(filters)
         if len(filter_url) > 0:
             url = url + "?" + filter_url
@@ -203,8 +206,10 @@ class AdSel(object):
             activities.append(acty)
         return activities
 
-    def get_cohorts_by_qtr(self, quarter_id, **kwargs):
+    def get_cohorts_by_qtr(self, quarter_id, workspace_id=None, **kwargs):
         url = "{}/cohorts/{}".format(self.API, quarter_id)
+        if workspace_id is not None:
+            url += "?" + urllib.parse.urlencode({'workspaceId': workspace_id})
         response = self._get_resource(url)
         cohorts = self._cohorts_from_json(response)
         return cohorts
@@ -227,9 +232,11 @@ class AdSel(object):
             cohorts.append(cohort_model)
         return cohorts
 
-    def get_decisions(self, quarter_id, **kwargs):
+    def get_decisions(self, quarter_id, workspace_id=None):
         url = "{}/departmentaldecisions/GetWithCounts?academicQtrKeyId={}"\
             .format(self.API, quarter_id)
+        if workspace_id is not None:
+            url += "&" + urllib.parse.urlencode({'workspaceId': workspace_id})
         response = self._get_resource(url)
         decisions = self._decisions_from_json(response)
         return decisions
@@ -245,22 +252,33 @@ class AdSel(object):
             decisions.append(decision_model)
         return decisions
 
-    def get_major_details_by_qtr_major(self, quarter_id, major_program_code):
+    def get_major_details_by_qtr_major(self,
+                                       quarter_id,
+                                       major_program_code,
+                                       workspace_id=None):
         url = "{}/majors/details/{}/{}".format(self.API,
                                                quarter_id,
                                                major_program_code)
+        if workspace_id is not None:
+            url += "?" + urllib.parse.urlencode({'workspaceId': workspace_id})
         response = self._get_resource(url)
         major = self._major_from_json(response)
         return major
 
-    def get_majors_by_qtr(self, quarter_id, **kwargs):
-        majors = self._get_majors_by_page(quarter_id, 1, [])
+    def get_majors_by_qtr(self, quarter_id, workspace_id=None):
+        majors = self._get_majors_by_page(quarter_id, 1, [], workspace_id)
         return majors
 
-    def _get_majors_by_page(self, quarter_id, page, major_list=[]):
+    def _get_majors_by_page(self,
+                            quarter_id,
+                            page,
+                            major_list=[],
+                            workspace_id=None):
         url = "{}/majors/details/{}?Page={}&Limit=100".format(self.API,
                                                               quarter_id,
                                                               page)
+        if workspace_id is not None:
+            url += "&" + urllib.parse.urlencode({'workspaceId': workspace_id})
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
         major_list += majors
