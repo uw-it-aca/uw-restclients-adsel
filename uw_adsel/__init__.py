@@ -203,8 +203,11 @@ class AdSel(object):
             activities.append(acty)
         return activities
 
-    def get_cohorts_by_qtr(self, quarter_id, **kwargs):
+    def get_cohorts_by_qtr(self, quarter_id, workspace_id=None, **kwargs):
         url = "{}/cohorts/{}".format(self.API, quarter_id)
+        if workspace_id is not None:
+            url += urllib.parse.urlencode({'workspaceId': workspace_id})
+        print(url)
         response = self._get_resource(url)
         cohorts = self._cohorts_from_json(response)
         return cohorts
