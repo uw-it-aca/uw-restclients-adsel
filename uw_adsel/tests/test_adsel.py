@@ -81,27 +81,30 @@ class AdselTest(TestCase):
         self.assertEqual(len(activities), 4)
 
     def test_get_application(self):
-        applications = self.adsel.get_applications_by_qtr_syskey(0, 123)
+        applications = self.adsel.get_applications_by_qtr_syskey(0, 123, 1)
         self.assertEqual(len(applications), 4)
         self.assertEqual(applications[0].adsel_id, 1)
 
     def test_get_applications_by_syskey_list(self):
         # No Match
         applications = self.adsel.get_applications_by_qtr_syskey_list(0,
-                                                                      [123])
+                                                                      [123],
+                                                                      1)
         self.assertEqual(len(applications), 0)
         # Partial Match
         applications = self.adsel.get_applications_by_qtr_syskey_list(0,
                                                                       [123,
                                                                        76711,
-                                                                       656340])
+                                                                       656340],
+                                                                      1)
         self.assertEqual(len(applications), 2)
         # Full Match
         applications = self.adsel.get_applications_by_qtr_syskey_list(0,
                                                                       [456340,
                                                                        97508,
                                                                        156340,
-                                                                       76711])
+                                                                       76711],
+                                                                      1)
         self.assertEqual(len(applications), 6)
         self.assertEqual(applications[0].application_type, "Postbac")
         self.assertIsNone(applications[5].application_type)
@@ -160,7 +163,7 @@ class AdselTest(TestCase):
             self.fail('assign_majors raised an exception')
 
     def test_get_all_app(self):
-        apps = self.adsel.get_all_applications_by_qtr(0)
+        apps = self.adsel.get_all_applications_by_qtr(0, 1)
         self.assertEqual(len(apps), 4)
 
     def test_purple_gold_assignment(self):
