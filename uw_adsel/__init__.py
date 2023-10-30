@@ -84,31 +84,45 @@ class AdSel(object):
             quarters.append(qtr)
         return quarters
 
-    def get_all_applications_by_qtr(self, quarter_id):
-        url = "{}/applications/{}/all".format(self.API, quarter_id)
+    def get_all_applications_by_qtr(self, quarter_id, workspace_id):
+        url = "{}/applications/{}/all/{}".format(self.API,
+                                                 quarter_id,
+                                                 workspace_id)
         response = self._get_resource(url)
         applications = self._get_applications_from_json(response)
         return applications
 
-    def get_applications_by_qtr_syskey(self, quarter_id, syskey):
-        url = "{}/applications/{}/{}".format(self.API, quarter_id, syskey)
+    def get_applications_by_qtr_syskey(self, quarter_id, syskey, workspace_id):
+        url = "{}/applications/{}/{}/{}".format(self.API,
+                                                quarter_id,
+                                                syskey,
+                                                workspace_id)
         response = self._get_resource(url)
         application = self._get_applications_from_json(response)
         return application
 
-    def get_applications_by_qtr_syskey_list(self, quarter_id, syskey_list):
+    def get_applications_by_qtr_syskey_list(self,
+                                            quarter_id,
+                                            syskey_list,
+                                            workspace_id):
         if isinstance(self.DAO.get_implementation(), MockDAO):
             all_applications = self._get_live_apps_by_qtr_syskey_list(
                 quarter_id,
-                syskey_list)
+                syskey_list,
+                workspace_id)
             return [app for app in all_applications
                     if app.system_key in syskey_list]
         else:
             return self._get_live_apps_by_qtr_syskey_list(quarter_id,
-                                                          syskey_list)
+                                                          syskey_list,
+                                                          workspace_id)
 
-    def _get_live_apps_by_qtr_syskey_list(self, quarter_id, syskey_list):
-        url = "{}/applications/SystemKeys/{}".format(self.API, quarter_id)
+    def _get_live_apps_by_qtr_syskey_list(self, quarter_id,
+                                          syskey_list,
+                                          workspace_id):
+        url = "{}/applications/SystemKeys/{}/{}".format(self.API,
+                                                        quarter_id,
+                                                        workspace_id)
         response = self._post_resource(url, syskey_list)
         applications = self._get_applications_from_json(response)
         return applications
