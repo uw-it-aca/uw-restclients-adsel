@@ -109,6 +109,29 @@ class AdselTest(TestCase):
         self.assertEqual(applications[0].application_type, "Postbac")
         self.assertIsNone(applications[5].application_type)
 
+    def test_get_applications_by_adselid_list(self):
+        # No Match
+        applications = self.adsel.get_applications_by_qtr_adselid_list(0,
+                                                                       [123],
+                                                                       1)
+        self.assertEqual(len(applications), 0)
+        # Partial Match
+        applications = self.adsel.get_applications_by_qtr_adselid_list(0,
+                                                                       [123,
+                                                                        54687,
+                                                                        84136],
+                                                                       1)
+        self.assertEqual(len(applications), 2)
+        # Full Match
+        applications = self.adsel.get_applications_by_qtr_adselid_list(0,
+                                                                       [73445,
+                                                                        45743,
+                                                                        17508,
+                                                                        76512],
+                                                                       1)
+        self.assertEqual(len(applications), 4)
+        self.assertEqual(applications[0].application_type, "Transfer")
+
     def test_post(self):
         a1 = Application()
         a1.adsel_id = 123

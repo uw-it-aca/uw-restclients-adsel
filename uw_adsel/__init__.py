@@ -127,7 +127,35 @@ class AdSel(object):
         applications = self._get_applications_from_json(response)
         return applications
 
-    def _get_applications_from_json(self, response):
+    def get_applications_by_qtr_adselid_list(self,
+                                             quarter_id,
+                                             adselid_list,
+                                             workspace_id):
+        if isinstance(self.DAO.get_implementation(), MockDAO):
+            all_applications = self._get_live_apps_by_qtr_adselid_list(
+                quarter_id,
+                adselid_list,
+                workspace_id)
+            return [app for app in all_applications
+                    if app.adsel_id in adselid_list]
+        else:
+            return self._get_live_apps_by_qtr_adselid_list(quarter_id,
+                                                           adselid_list,
+                                                           workspace_id)
+
+    def _get_live_apps_by_qtr_adselid_list(self,
+                                           quarter_id,
+                                           adselid_list,
+                                           workspace_id):
+        url = "{}/applications/AdmissionSelectionId/{}/{}".format(self.API,
+                                                                  quarter_id,
+                                                                  workspace_id)
+        response = self._post_resource(url, adselid_list)
+        applications = self._get_applications_from_json(response)
+        return applications
+
+    @staticmethod
+    def _get_applications_from_json(response):
         applications = []
         for app in response:
             application = Application()
