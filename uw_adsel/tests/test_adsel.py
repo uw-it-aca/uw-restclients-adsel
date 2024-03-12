@@ -24,16 +24,16 @@ class AdselTest(TestCase):
             self.adsel._get_resource("/foobar/")
 
     def test_get_majors(self):
-        majors = self.adsel.get_majors_by_qtr(0)
-        self.assertEqual(len(majors), 4)
+        majors = self.adsel.get_majors_by_qtr(1)
+        self.assertEqual(len(majors), 2)
         self.assertEqual(majors[1].major_abbr, "CHEM")
-        self.assertEqual(majors[1].assigned_freshman, 50)
+        self.assertEqual(majors[1].assigned_freshman, 10)
         majors_unpaginated = self.adsel.get_majors_by_qtr(1)
         self.assertEqual(len(majors_unpaginated), 2)
 
-        workspace_majors = self.adsel.get_majors_by_qtr(0, 1)
-        self.assertEqual(len(workspace_majors), 2)
-        self.assertEqual(workspace_majors[1].assigned_count, 721)
+        workspace_majors = self.adsel.get_majors_by_qtr(1, 1)
+        self.assertEqual(len(workspace_majors), 1)
+        self.assertEqual(workspace_majors[0].assigned_count, 120)
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_quarters(self, mock_obj):

@@ -308,25 +308,12 @@ class AdSel(object):
         return major
 
     def get_majors_by_qtr(self, quarter_id, workspace_id=None):
-        majors = self._get_majors_by_page(quarter_id, 1, [], workspace_id)
-        return majors
-
-    def _get_majors_by_page(self,
-                            quarter_id,
-                            page,
-                            major_list=[],
-                            workspace_id=None):
-        url = "{}/majors/details/{}?Page={}&Limit=100".format(self.API,
-                                                              quarter_id,
-                                                              page)
-        if workspace_id is not None:
-            url += "&" + urllib.parse.urlencode({'workspaceId': workspace_id})
+        url = "{}/majors/details/{}?workspaceId={}".format(self.API,
+                                                           quarter_id,
+                                                           workspace_id)
         response = self._get_resource(url)
         majors = self._majors_from_json(response)
-        major_list += majors
-        if response['nextPage'] is not None:
-            self._get_majors_by_page(quarter_id, page+1, major_list)
-        return major_list
+        return majors
 
     def _majors_from_json(self, response):
         majors = []
