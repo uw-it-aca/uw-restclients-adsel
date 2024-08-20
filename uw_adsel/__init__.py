@@ -460,15 +460,23 @@ class AdSel(object):
         quarters = self._quarters_from_json(response)
         return quarters
 
-    def get_filter_values(self, year=None, quarter=None, report_view=None):
-        url = "{}/filter".format(self.API)
+    def get_static_filter_values(self, year, quarter, report_view):
+        return self._get_filter_values("static", year, quarter, report_view)
+
+    def get_dynamic_filter_values(self, year, quarter, report_view):
+        return self._get_filter_values("dynamic", year, quarter, report_view)
+
+
+    def _get_filter_values(self, type, year, quarter, report_view):
+        if type not in ["static", "dynamic"]:
+            raise ValueError("type must be 'static' or 'dynamic'")
+        url = "{}/filter/{}".format(self.API, type)
         filters = {"academicYr": year,
                    "academicQtr": quarter,
                    "reportView": report_view}
         params = {k: v for k, v in filters.items() if v is not None}
         filter_url = urllib.parse.urlencode(params)
-        if len(filter_url) > 0:
-            url = url + "?" + filter_url
+        url = url + "?" + filter_url
         response = self._get_resource(url)
         return response
 
