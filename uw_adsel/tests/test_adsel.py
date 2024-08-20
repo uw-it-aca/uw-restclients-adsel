@@ -316,11 +316,14 @@ class AdselTest(TestCase):
 
     def test_filter_values(self):
         client = AdSel()
-        filters = client.get_filter_values()
-        self.assertEqual(len(filters), 15)
-        self.assertEqual(len(filters['internationalScores'].items()), 12)
-        with self.assertRaises(DataFailureException):
-            client.get_filter_values(year=2022)
+        with self.assertRaises(ValueError):
+            client._get_filter_values("foobar", 2024, 4, 0)
+
+        static_filters = client._get_filter_values("static", 2024, 4, 0)
+        self.assertEqual(len(static_filters['residentGroup']), 3)
+
+        dynamic_filters = client._get_filter_values("dynamic", 2024, 4, 0)
+        self.assertEqual(len(dynamic_filters['sdbCohort']), 43)
 
     def test_workspaces_from_json(self):
         json = [
