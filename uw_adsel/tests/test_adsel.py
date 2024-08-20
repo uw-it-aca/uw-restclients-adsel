@@ -325,7 +325,6 @@ class AdselTest(TestCase):
         dynamic_filters = client._get_filter_values("dynamic", 2024, 4, 0)
         self.assertEqual(len(dynamic_filters['sdbCohort']), 43)
 
-
     def test_workspaces_from_json(self):
         json = [
             {

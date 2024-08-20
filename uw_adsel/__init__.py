@@ -466,7 +466,6 @@ class AdSel(object):
     def get_dynamic_filter_values(self, year, quarter, report_view):
         return self._get_filter_values("dynamic", year, quarter, report_view)
 
-
     def _get_filter_values(self, type, year, quarter, report_view):
         if type not in ["static", "dynamic"]:
             raise ValueError("type must be 'static' or 'dynamic'")
