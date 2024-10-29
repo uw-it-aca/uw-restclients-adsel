@@ -7,6 +7,7 @@ import logging
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
+from uw_adsel.adselazure_dao import ADSEL_AZURE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
     Decision, AdminMajor, AdminCohort, Workspace
 import dateutil.parser
@@ -21,7 +22,12 @@ PAGE_SIZE = 300
 MAJOR_TYPE = "major"
 COHORT_TYPE = "cohort"
 
+class AdSelAzure(AdSel):
 
+    API = ''
+
+    def __init(self):
+        self.DAO = ADSEL_AZURE_DAO()
 class AdSel(object):
     """
     The AdSel object has methods for interacting with the AdSel API.
