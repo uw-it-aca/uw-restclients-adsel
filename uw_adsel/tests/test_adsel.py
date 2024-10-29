@@ -1,9 +1,8 @@
 from unittest import TestCase, mock
 from restclients_core.exceptions import DataFailureException
-from uw_adsel.utilities import fdao_adsel_override
 from uw_adsel import AdSel
-from uw_adsel.models import CohortAssignment, MajorAssignment, Application,\
-    PurpleGoldApplication, PurpleGoldAssignment, DecisionAssignment,\
+from uw_adsel.models import CohortAssignment, MajorAssignment, Application, \
+    PurpleGoldApplication, PurpleGoldAssignment, DecisionAssignment, \
     DepartmentalDecisionApplication
 from datetime import datetime
 
@@ -34,6 +33,12 @@ class AdselTest(TestCase):
         workspace_majors = self.adsel.get_majors_by_qtr(1, 1)
         self.assertEqual(len(workspace_majors), 1)
         self.assertEqual(workspace_majors[0].assigned_count, 120)
+
+    def test_assign(self):
+        cohort = CohortAssignment(cohort_number=1, campus=2)
+        submit = self.adsel.assign_cohorts_manual(cohort)
+        self.assertEqual(submit['response']['summaryPostStatus'],
+                         "AzureSubmitSuccess")
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_quarters(self, mock_obj):

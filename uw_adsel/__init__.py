@@ -7,6 +7,7 @@ import logging
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
+from uw_adsel.adselazure_dao import ADSEL_AZURE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
     Decision, AdminMajor, AdminCohort, Workspace
 import dateutil.parser
@@ -44,10 +45,7 @@ class AdSel(object):
         return {"response": response, "request": request}
 
     def assign_cohorts_manual(self, cohort_assignment):
-        url = "{}/assignments/cohort".format(self.API)
-        request = cohort_assignment.json_data()
-        response = self._post_resource(url, request)
-        return {"response": response, "request": request}
+        return AdSelAzure().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
         url = "{}/assignments/purpleAndGold".format(self.API)
@@ -545,3 +543,18 @@ class AdSel(object):
     def _log_error(self, url, response):
         logger.error("{0} ==> status:{1} data:{2}".format(
             url, response.status, response.data))
+
+
+class AdSelAzure(AdSel):
+    """
+    The AdSel object has methods for interacting with endpoints
+    deployed to azureapi
+    """
+    def __init__(self):
+        self.DAO = ADSEL_AZURE_DAO()
+
+    def assign_cohorts_manual(self, cohort_assignment):
+        url = "/cohort"
+        request = cohort_assignment.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
