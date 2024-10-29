@@ -22,12 +22,7 @@ PAGE_SIZE = 300
 MAJOR_TYPE = "major"
 COHORT_TYPE = "cohort"
 
-class AdSelAzure(AdSel):
 
-    API = ''
-
-    def __init(self):
-        self.DAO = ADSEL_AZURE_DAO()
 class AdSel(object):
     """
     The AdSel object has methods for interacting with the AdSel API.
@@ -50,10 +45,7 @@ class AdSel(object):
         return {"response": response, "request": request}
 
     def assign_cohorts_manual(self, cohort_assignment):
-        url = "{}/assignments/cohort".format(self.API)
-        request = cohort_assignment.json_data()
-        response = self._post_resource(url, request)
-        return {"response": response, "request": request}
+        return AdSelAzure().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
         url = "{}/assignments/purpleAndGold".format(self.API)
@@ -551,3 +543,18 @@ class AdSel(object):
     def _log_error(self, url, response):
         logger.error("{0} ==> status:{1} data:{2}".format(
             url, response.status, response.data))
+
+
+class AdSelAzure(AdSel):
+    """
+    The AdSel object has methods for interacting with endpoints
+    deployed to azureapi
+    """
+    def __init__(self):
+        self.DAO = ADSEL_AZURE_DAO()
+
+    def assign_cohorts_manual(self, cohort_assignment):
+        url = "/cohort"
+        request = cohort_assignment.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}

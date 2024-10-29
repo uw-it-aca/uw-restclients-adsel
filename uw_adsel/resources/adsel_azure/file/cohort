@@ -1,5 +1,5 @@
 {
-  "summaryPostStatus": "string",
+  "summaryPostStatus": "AzureSubmitSuccess",
   "items": [
     {
       "status": "string",
