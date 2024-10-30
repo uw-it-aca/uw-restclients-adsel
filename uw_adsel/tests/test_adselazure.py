@@ -5,9 +5,8 @@ from uw_adsel.models import CohortAssignment
 
 class AdselTest(TestCase):
     adsel = AdSelAzure()
+    cohort = CohortAssignment(cohort_number=1, campus=2)
 
-    def test_assign_cohort(self):
-        cohort = CohortAssignment(cohort_number=1, campus=2)
-        submit = self.adsel.assign_cohorts_manual(cohort)
-        self.assertEqual(submit['response']['summaryPostStatus'],
-                         "AzureSubmitSuccess")
+    def test_bulk_assign(self):
+        submit = self.adsel.assign_cohorts_bulk(self.cohort)
+        self.assertEqual(submit["response"], {})

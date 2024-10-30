@@ -34,11 +34,10 @@ class AdselTest(TestCase):
         self.assertEqual(len(workspace_majors), 1)
         self.assertEqual(workspace_majors[0].assigned_count, 120)
 
-    def test_assign(self):
+    def test_assign_bulk(self):
         cohort = CohortAssignment(cohort_number=1, campus=2)
-        submit = self.adsel.assign_cohorts_manual(cohort)
-        self.assertEqual(submit['response']['summaryPostStatus'],
-                         "AzureSubmitSuccess")
+        submit = self.adsel.assign_cohorts_bulk(cohort)
+        self.assertEqual(submit['response'], {})
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_quarters(self, mock_obj):
