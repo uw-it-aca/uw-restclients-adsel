@@ -39,10 +39,7 @@ class AdSel(object):
         return {"response": response, "request": request}
 
     def assign_cohorts_bulk(self, cohort_assignment):
-        url = "{}/assignments/cohort/bulk".format(self.API)
-        request = cohort_assignment.json_data()
-        response = self._post_resource(url, request)
-        return {"response": response, "request": request}
+        return AdSelAzure().assign_cohorts_bulk(cohort_assignment)
 
     def assign_cohorts_manual(self, cohort_assignment):
         return AdSelAzure().assign_cohorts_manual(cohort_assignment)
@@ -519,8 +516,10 @@ class AdSel(object):
         if response.status not in [200, 201]:
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
-
-        return json.loads(response.data)
+        try:
+            return json.loads(response.data)
+        except json.JSONDecodeError:
+            return {}
 
     def _put_resource(self, url, request):
         response = self.DAO.putURL(url,
@@ -555,6 +554,12 @@ class AdSelAzure(AdSel):
 
     def assign_cohorts_manual(self, cohort_assignment):
         url = "/cohort"
+        request = cohort_assignment.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
+
+    def assign_cohorts_bulk(self, cohort_assignment):
+        url = "/cohort/bulk"
         request = cohort_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
