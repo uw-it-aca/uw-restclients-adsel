@@ -558,7 +558,6 @@ class AdSelAzure(AdSel):
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
 
-
     def assign_cohorts_bulk(self, cohort_assignment):
         url = "/cohort/bulk"
         request = cohort_assignment.json_data()
