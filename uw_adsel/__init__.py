@@ -474,15 +474,31 @@ class AdSel(object):
         response = self._get_resource(url)
         return response
 
-    def create_workspace(self, workspace):
-        url = "{}/admin/workspace".format(self.API)
-        return self._post_resource(url, workspace.json_data())
+    def delete_workspace(self, workspace_id, uwnetid):
+        url = (
+            "{}/workspaces?workspaceId={}&username={}"
+            .format(self.API,
+                    workspace_id,
+                    uwnetid))
+        return self._post_resource(url, {})
 
-    def duplicate_workspace(self, workspace_id, workspace_name):
-        url = "{}/admin/workspace/duplicate".format(self.API)
-        return self._post_resource(url,
-                                   {"duplicateWorkspaceName": workspace_name,
-                                    "workspaceId": workspace_id})
+    def duplicate_workspace(self,
+                            workspace_id,
+                            workspace_name,
+                            destination_uwnetid):
+        params = {
+            "workspaceId": workspace_id,
+            "duplicateWorkspaceName": workspace_name,
+            "destinationUserAlias": destination_uwnetid
+        }
+        encoded_params = urllib.parse.urlencode(params)
+        url = (("{}/workspaces/duplicate?{}").format(self.API, encoded_params))
+        return self._post_resource(url, {})
+
+    def reset_workspace(self, workspace_id, uwnetid):
+        url = "{}/workspaces/reset?workspaceId={}&username={}".format(
+            self.API, workspace_id, uwnetid)
+        return self._post_resource(url, {})
 
     def get_workspaces_by_qtr(self, qtr):
         url = "{}/workspaces/{}".format(self.API, qtr)
@@ -519,7 +535,7 @@ class AdSel(object):
         try:
             return json.loads(response.data)
         except json.JSONDecodeError:
-            return {}
+            return {"string_response": response.data.decode('utf-8')}
 
     def _put_resource(self, url, request):
         response = self.DAO.putURL(url,
@@ -529,6 +545,14 @@ class AdSel(object):
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
 
+        return json.loads(response.data)
+
+    def _delete_resource(self, url):
+        response = self.DAO.deleteURL(url,
+                                      self._post_headers())
+        if response.status not in [200, 201]:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
         return json.loads(response.data)
 
     def _headers(self):

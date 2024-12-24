@@ -9,4 +9,4 @@ class AdselTest(TestCase):
 
     def test_bulk_assign(self):
         submit = self.adsel.assign_cohorts_bulk(self.cohort)
-        self.assertEqual(submit["response"], {})
+        self.assertEqual(submit["response"], {'string_response': ''})

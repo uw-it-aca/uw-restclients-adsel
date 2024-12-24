@@ -37,7 +37,7 @@ class AdselTest(TestCase):
     def test_assign_bulk(self):
         cohort = CohortAssignment(cohort_number=1, campus=2)
         submit = self.adsel.assign_cohorts_bulk(cohort)
-        self.assertEqual(submit['response'], {})
+        self.assertEqual(submit['response'], {'string_response': ''})
 
     @mock.patch('uw_adsel.AdSel.get_now', side_effect=mocked_get_now)
     def test_get_quarters(self, mock_obj):
@@ -355,3 +355,21 @@ class AdselTest(TestCase):
     def test_get_worspaces_by_qtr(self):
         workspaces = AdSel().get_workspaces_by_qtr(20194)
         self.assertEqual(len(workspaces), 9)
+
+    def test_duplicate_workspace(self):
+        client = AdSel()
+        print(654654654)
+        workspace = client.duplicate_workspace(16,
+                                               "Copy of 16",
+                                               "javerage")
+        self.assertIn("timeout", workspace['string_response'])
+
+    def test_reset_workspaces(self):
+        client = AdSel()
+        response = client.reset_workspace(16, "javerage")
+        self.assertIn("timeout", response['string_response'])
+
+    def test_delete_workspace(self):
+        client = AdSel()
+        response = client.delete_workspace(12, "javerage")
+        self.assertEqual(response, 1)
