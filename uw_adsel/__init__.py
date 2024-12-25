@@ -475,12 +475,16 @@ class AdSel(object):
         return response
 
     def delete_workspace(self, workspace_id, uwnetid):
+        params = {
+            "workspaceId": workspace_id,
+            "username": uwnetid
+        }
+        encoded_params = urllib.parse.urlencode(params)
         url = (
-            "{}/workspaces?workspaceId={}&username={}"
+            "{}/workspaces?{}"
             .format(self.API,
-                    workspace_id,
-                    uwnetid))
-        return self._post_resource(url, {})
+                    encoded_params))
+        return self._delete_resource(url)
 
     def duplicate_workspace(self,
                             workspace_id,
@@ -496,8 +500,13 @@ class AdSel(object):
         return self._post_resource(url, {})
 
     def reset_workspace(self, workspace_id, uwnetid):
-        url = "{}/workspaces/reset?workspaceId={}&username={}".format(
-            self.API, workspace_id, uwnetid)
+        params = {
+            "workspaceId": workspace_id,
+            "username": uwnetid
+        }
+        encoded_params = urllib.parse.urlencode(params)
+        url = "{}/workspaces/reset?{}".format(
+            self.API, encoded_params)
         return self._post_resource(url, {})
 
     def get_workspaces_by_qtr(self, qtr):
