@@ -264,6 +264,8 @@ class Workspace(models.Model):
     workspace_name = models.CharField(max_length=255)
     owner_alias = models.CharField(max_length=255)
     source_workspace_id = models.IntegerField()
+    workspace_status_id = models.IntegerField()
+    workspace_status_desc = models.CharField(max_length=255)
 
     def json_data(self):
         return {
@@ -271,5 +273,7 @@ class Workspace(models.Model):
             "workspaceId": self.workspace_id,
             "workspaceName": self.workspace_name,
             "ownerAlias": self.owner_alias,
-            "sourceWorkspaceId": self.source_workspace_id
+            "sourceWorkspaceId": self.source_workspace_id,
+            "workspaceStatusId": self.workspace_status_id,
+            "workspaceStatusDesc": self.workspace_status_desc
         }

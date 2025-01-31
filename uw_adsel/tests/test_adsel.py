@@ -335,13 +335,19 @@ class AdselTest(TestCase):
                 "academicQtrKeyId": 20194,
                 "workspaceId": 1,
                 "workspaceName": "My Workspace",
-                "ownerAlias": "javerage"
+                "ownerAlias": "javerage",
+                "sourceWorkspaceId": None,
+                "workspaceStatusId": 1,
+                "workspaceStatusDesc": "Main"
             },
             {
                 "academicQtrKeyId": 20194,
                 "workspaceId": 2,
                 "workspaceName": "Demo Workspace",
-                "ownerAlias": "javerage"
+                "ownerAlias": "javerage",
+                "sourceWorkspaceId": None,
+                "workspaceStatusId": 2,
+                "workspaceStatusDesc": "Clone"
             }
         ]
 
@@ -351,14 +357,23 @@ class AdselTest(TestCase):
         self.assertEqual(workspaces[0].workspace_name, "My Workspace")
         self.assertEqual(workspaces[0].owner_alias, "javerage")
         self.assertEqual(workspaces[0].academic_qtr_id, 20194)
+        self.assertEqual(workspaces[0].workspace_status_id, 1)
+        self.assertEqual(workspaces[0].workspace_status_desc, "Main")
 
     def test_get_worspaces_by_qtr(self):
         workspaces = AdSel().get_workspaces_by_qtr(20194)
         self.assertEqual(len(workspaces), 9)
 
+        ws_data = workspaces[0].json_data()
+        self.assertEqual(ws_data['workspaceId'], 1)
+        self.assertEqual(ws_data['workspaceName'], "My Workspace")
+        self.assertEqual(ws_data['ownerAlias'], "javerage")
+        self.assertEqual(ws_data['sourceWorkspaceId'], None)
+        self.assertEqual(ws_data['workspaceStatusId'], 1)
+        self.assertEqual(ws_data['workspaceStatusDesc'], "Main")
+
     def test_duplicate_workspace(self):
         client = AdSel()
-        print(654654654)
         workspace = client.duplicate_workspace(16,
                                                "Copy of 16",
                                                "javerage")
