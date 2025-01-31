@@ -517,11 +517,15 @@ class AdSel(object):
 
     def _workspaces_from_json(self, response):
         workspaces = []
-        for workspace in response:
-            json_data = {'academic_qtr_id': workspace['academicQtrKeyId'],
-                         'workspace_id': workspace['workspaceId'],
-                         'workspace_name': workspace['workspaceName'],
-                         'owner_alias': workspace['ownerAlias']}
+        for ws in response:
+            json_data = {'academic_qtr_id': ws['academicQtrKeyId'],
+                         'workspace_id': ws['workspaceId'],
+                         'workspace_name': ws['workspaceName'],
+                         'owner_alias': ws['ownerAlias'],
+                         'source_workspace_id': ws['sourceWorkspaceId'],
+                         'workspace_status_id': ws['workspaceStatusId'],
+                         'workspace_status_desc': ws['workspaceStatusDesc'],
+                         }
             workspaces.append(Workspace(**json_data))
         return workspaces
 
