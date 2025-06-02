@@ -600,3 +600,9 @@ class AdSelAzure(AdSel):
         request = cohort_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
+
+    def assign_pugo(self, pg_assignments):
+        url = "/pugo"
+        request = pg_assignments.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
