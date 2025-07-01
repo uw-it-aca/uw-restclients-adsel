@@ -80,13 +80,18 @@ class Application(models.Model):
                 'systemKey': int(self.system_key),
                 'applicationType': self.application_type}
 
+    def major_assign_json_data(self):
+        return {'AdmissionSelectionId': int(self.adsel_id),
+                'ApplicationNbr': self.application_number,
+                'SystemKey': int(self.system_key)}
+
 
 class PurpleGoldApplication(Application):
     award_amount = models.IntegerField()
 
     def json_data(self):
-        return {'admissionSelectionId': int(self.adsel_id),
-                'awardAmount': self.award_amount}
+        return {'AdmissionSelectionId': int(self.adsel_id),
+                'AwardAmount': self.award_amount}
 
 
 class DepartmentalDecisionApplication(Application):
@@ -135,15 +140,18 @@ class MajorAssignment(Assignment):
     def json_data(self):
         applicant_json = []
         for application in self.applicants:
-            applicant_json.append(application.json_data())
-        return {'applicants': applicant_json,
-                'majorProgramCode': self.major_code,
-                'assignmentDetail': {'assignmentType': self.assignment_type,
-                                     'academicQtrKeyId': self.quarter,
-                                     'campus': int(self.campus),
-                                     'comments': self.comments,
-                                     'decisionImportUser': self.user,
-                                     'workspaceId': self.workspace_id}
+            applicant_json.append(application.major_assign_json_data())
+        return {'Applicants': applicant_json,
+                'MajorProgramCode': self.major_code,
+                'AssignmentDetail': {
+                    'AssignmentCategory': "Major",
+                    'AssignmentType': self.assignment_type,
+                    'AcademicQtrKeyId': self.quarter,
+                    'Campus': int(self.campus),
+                    'Comments': self.comments,
+                    'DecisionImportUser': self.user,
+                    'WorkspaceId': self.workspace_id
+                }
                 }
 
 
@@ -152,12 +160,15 @@ class PurpleGoldAssignment(Assignment):
         applicant_json = []
         for application in self.applicants:
             applicant_json.append(application.json_data())
-        return {'applicants': applicant_json,
-                'assignmentDetail': {'assignmentType': self.assignment_type,
-                                     'academicQtrKeyId': self.quarter,
-                                     'comments': self.comments,
-                                     'decisionImportUser': self.user,
-                                     'workspaceId': self.workspace_id}
+        return {'Applicants': applicant_json,
+                'AssignmentDetail': {
+                    "AssignmentCategory": "PuGo",
+                    'AssignmentType': "manual",
+                    'AcademicQtrKeyId': self.quarter,
+                    'Comments': self.comments,
+                    'Campus': 0,
+                    'DecisionImportUser': self.user,
+                    'WorkspaceId': self.workspace_id}
                 }
 
 
