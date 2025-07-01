@@ -602,7 +602,7 @@ class AdSelAzure(AdSel):
         return {"response": response, "request": request}
 
     def assign_majors(self, major_assignment):
-        url = f"{self.API}/major"
+        url = "/major"
         request = major_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
