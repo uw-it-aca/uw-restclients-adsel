@@ -166,7 +166,7 @@ class PurpleGoldAssignment(Assignment):
                     'AssignmentType': "manual",
                     'AcademicQtrKeyId': self.quarter,
                     'Comments': self.comments,
-                    'Campus': 0,
+                    'Campus': int(self.campus),
                     'DecisionImportUser': self.user,
                     'WorkspaceId': self.workspace_id}
                 }

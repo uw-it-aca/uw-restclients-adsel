@@ -42,7 +42,7 @@ class AdSel(object):
         return AdSelAzure().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
-        AdSelAzure().assign_pugo(pg_assignments)
+        return AdSelAzure().assign_pugo(pg_assignments)
 
     def assign_decisions(self, decision_assignment):
         url = "{}/assignments/departmentalDecision".format(self.API)
@@ -602,7 +602,7 @@ class AdSelAzure(AdSel):
         return {"response": response, "request": request}
 
     def assign_majors(self, major_assignment):
-        url = "/major".format(self.API)
+        url = f"{self.API}/major"
         request = major_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
