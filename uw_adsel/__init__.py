@@ -33,10 +33,7 @@ class AdSel(object):
         self.DAO = ADSEL_DAO()
 
     def assign_majors(self, major_assignment):
-        url = "{}/assignments/major".format(self.API)
-        request = major_assignment.json_data()
-        response = self._post_resource(url, request)
-        return {"response": response, "request": request}
+        return AdSelAzure().assign_majors(major_assignment)
 
     def assign_cohorts_bulk(self, cohort_assignment):
         return AdSelAzure().assign_cohorts_bulk(cohort_assignment)
@@ -45,10 +42,7 @@ class AdSel(object):
         return AdSelAzure().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
-        url = "{}/assignments/purpleAndGold".format(self.API)
-        request = pg_assignments.json_data()
-        response = self._post_resource(url, request)
-        return {"response": response, "request": request}
+        return AdSelAzure().assign_pugo(pg_assignments)
 
     def assign_decisions(self, decision_assignment):
         url = "{}/assignments/departmentalDecision".format(self.API)
@@ -604,5 +598,11 @@ class AdSelAzure(AdSel):
     def assign_pugo(self, pg_assignments):
         url = "/pugo"
         request = pg_assignments.json_data()
+        response = self._post_resource(url, request)
+        return {"response": response, "request": request}
+
+    def assign_majors(self, major_assignment):
+        url = "/major"
+        request = major_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}

@@ -179,10 +179,10 @@ class AdselTest(TestCase):
         major_assign.workspace_id = 1
 
         major_json = major_assign.json_data()
-        self.assertEqual(len(major_json['applicants']), 2)
-        self.assertEqual(major_json['applicants'][0]['admissionSelectionId'],
+        self.assertEqual(len(major_json['Applicants']), 2)
+        self.assertEqual(major_json['Applicants'][0]['AdmissionSelectionId'],
                          123)
-        self.assertEqual(major_json['assignmentDetail']['workspaceId'], 1)
+        self.assertEqual(major_json['AssignmentDetail']['WorkspaceId'], 1)
 
         try:
             submission = self.adsel.assign_majors(major_assign)
@@ -215,8 +215,8 @@ class AdselTest(TestCase):
         purple_gold_assign.workspace_id = 1
 
         json_data = purple_gold_assign.json_data()
-        self.assertEqual(json_data['applicants'][0]['awardAmount'], 1000)
-        self.assertEqual(json_data['assignmentDetail']['workspaceId'], 1)
+        self.assertEqual(json_data['Applicants'][0]['AwardAmount'], 1000)
+        self.assertEqual(json_data['AssignmentDetail']['WorkspaceId'], 1)
 
         try:
             submission = self.adsel.assign_purple_gold(purple_gold_assign)
