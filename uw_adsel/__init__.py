@@ -7,7 +7,8 @@ import logging
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.adselazure_dao import ADSEL_AZURE_DAO
+from uw_adsel.adselazure_assign_dao import ADSEL_AZURE_ASSIGN_DAO
+from uw_adsel.adselazure_merge_dao import ADSEL_AZURE_MERGE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
     Decision, AdminMajor, AdminCohort, Workspace
 import dateutil.parser
@@ -36,10 +37,10 @@ class AdSel(object):
         return AdSelAzure().assign_majors(major_assignment)
 
     def assign_cohorts_bulk(self, cohort_assignment):
-        return AdSelAzure().assign_cohorts_bulk(cohort_assignment)
+        return AdSelAzureAssign().assign_cohorts_bulk(cohort_assignment)
 
     def assign_cohorts_manual(self, cohort_assignment):
-        return AdSelAzure().assign_cohorts_manual(cohort_assignment)
+        return AdSelAzureAssign().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
         return AdSelAzure().assign_pugo(pg_assignments)
@@ -575,13 +576,13 @@ class AdSel(object):
             url, response.status, response.data))
 
 
-class AdSelAzure(AdSel):
+class AdSelAzureAssign(AdSel):
     """
     The AdSel object has methods for interacting with endpoints
-    deployed to azureapi
+    deployed to azureapi for assignments
     """
     def __init__(self):
-        self.DAO = ADSEL_AZURE_DAO()
+        self.DAO = ADSEL_AZURE_ASSIGN_DAO()
 
     def assign_cohorts_manual(self, cohort_assignment):
         url = "/cohort"
@@ -606,3 +607,80 @@ class AdSelAzure(AdSel):
         request = major_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
+
+
+class AdSelAzureMerge(AdSel):
+    """
+    The AdSel object has methods for interacting with endpoints
+    deployed to azureapi for merging assignments
+    """
+    def __init__(self):
+        self.DAO = ADSEL_AZURE_MERGE_DAO()
+
+    def get_with_body(self, url, body, headers={}):
+        if headers == {}:
+            headers = {'Content-Type': 'application/json'}
+        return self.DAO.get_with_body(url, body, headers)
+
+    def check_conflict_cohort(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Cohort"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        return response
+
+    def get_conflict_details_cohort(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Details/Cohort"
+        response = self._get_resource(url)
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        return response
+
+    def merge_cohort(self, from_workspace, to_workspace, cohort_id, comments,
+                     username):
+        url = "/Merge/Cohort"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace,
+            "cohortNbr": cohort_id,
+            "comments": comments,
+            "decisionImportUser": username
+        }
+        response = self._post_resource(url, body)
+        return response
+
+    def check_conflict_major(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Major"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self._get_resource(url, body)
+        return response
+
+    def get_conflict_details_major(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Details/Major"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        return response
+
+    def merge_major(self, from_workspace, to_workspace,
+                    major_program_code, comments, username):
+        url = "/Merge/Major"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace,
+            "majorProgramCode": major_program_code,
+            "comments": comments,
+            "decisionImportUser": username
+        }
+        response = self._post_resource(url, body)
+        return response
