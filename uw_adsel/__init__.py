@@ -7,9 +7,11 @@ import logging
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
-from uw_adsel.adselazure_dao import ADSEL_AZURE_DAO
+from uw_adsel.adselazure_assign_dao import ADSEL_AZURE_ASSIGN_DAO
+from uw_adsel.adselazure_merge_dao import ADSEL_AZURE_MERGE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
-    Decision, AdminMajor, AdminCohort, Workspace
+    Decision, AdminMajor, AdminCohort, Workspace, MajorConflict, \
+    CohortConflict, MajorConflictDetail, CohortConflictDetail
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -33,16 +35,16 @@ class AdSel(object):
         self.DAO = ADSEL_DAO()
 
     def assign_majors(self, major_assignment):
-        return AdSelAzure().assign_majors(major_assignment)
+        return AdSelAzureAssign().assign_majors(major_assignment)
 
     def assign_cohorts_bulk(self, cohort_assignment):
-        return AdSelAzure().assign_cohorts_bulk(cohort_assignment)
+        return AdSelAzureAssign().assign_cohorts_bulk(cohort_assignment)
 
     def assign_cohorts_manual(self, cohort_assignment):
-        return AdSelAzure().assign_cohorts_manual(cohort_assignment)
+        return AdSelAzureAssign().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
-        return AdSelAzure().assign_pugo(pg_assignments)
+        return AdSelAzureAssign().assign_pugo(pg_assignments)
 
     def assign_decisions(self, decision_assignment):
         url = "{}/assignments/departmentalDecision".format(self.API)
@@ -575,13 +577,13 @@ class AdSel(object):
             url, response.status, response.data))
 
 
-class AdSelAzure(AdSel):
+class AdSelAzureAssign(AdSel):
     """
     The AdSel object has methods for interacting with endpoints
-    deployed to azureapi
+    deployed to azureapi for assignments
     """
     def __init__(self):
-        self.DAO = ADSEL_AZURE_DAO()
+        self.DAO = ADSEL_AZURE_ASSIGN_DAO()
 
     def assign_cohorts_manual(self, cohort_assignment):
         url = "/cohort"
@@ -606,3 +608,85 @@ class AdSelAzure(AdSel):
         request = major_assignment.json_data()
         response = self._post_resource(url, request)
         return {"response": response, "request": request}
+
+
+class AdSelAzureMerge(AdSel):
+    """
+    The AdSel object has methods for interacting with endpoints
+    deployed to azureapi for merging assignments
+    """
+    def __init__(self):
+        self.DAO = ADSEL_AZURE_MERGE_DAO()
+
+    def get_with_body(self, url, body, headers={}):
+        if headers == {}:
+            headers = {'Content-Type': 'application/json'}
+        return self.DAO.get_with_body(url, body, headers)
+
+    def check_conflict_cohort(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Cohort"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        conflicts = CohortConflict.conflicts_from_response(parsed_response)
+        return conflicts
+
+    def get_conflict_details_cohort(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Details/Cohort"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        details = CohortConflictDetail.details_from_response(parsed_response)
+        return details
+
+    def merge_cohort(self, merge_object):
+        url = "/Merge/Cohort"
+        body = merge_object.to_json()
+        response = self._post_resource(url, body)
+        return response
+
+    def check_conflict_major(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Major"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        conflicts = MajorConflict.conflicts_from_response(parsed_response)
+        return conflicts
+
+    def get_conflict_details_major(self, from_workspace, to_workspace):
+        url = "/ConflictCheck/Details/Major"
+        body = {
+            "fromWorkspaceId": from_workspace,
+            "toWorkspaceId": to_workspace
+        }
+        response = self.get_with_body(url, body)
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        details = MajorConflictDetail.details_from_response(parsed_response)
+        return details
+
+    def merge_major(self, merge_object):
+        url = "/Merge/Major"
+        body = merge_object.to_json()
+        response = self._post_resource(url, body)
+        return response
