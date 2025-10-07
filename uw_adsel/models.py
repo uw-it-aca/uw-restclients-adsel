@@ -380,7 +380,7 @@ class ConflictDetail(models.Model):
         self.high_school_city = json.get('highSchoolCity')
         self.high_school_state = json.get('highSchoolState')
         self.destination_ws = json.get('destination_ws')
-        self.high_school_FRL = json.get('highSchoolFRL')
+        self.high_school_FRL = json.get('highSchoolFRLPct')
         self.destination_ws_name = json.get('destination_ws_name')
         self.low_family_income = json.get('lowFamilyIncomeInd')
         self.sdb_src_syskey = json.get('sdbSrcSystemKey')
