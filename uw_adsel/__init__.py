@@ -34,7 +34,7 @@ class AdSel(object):
         self.DAO = ADSEL_DAO()
 
     def assign_majors(self, major_assignment):
-        return AdSelAzure().assign_majors(major_assignment)
+        return AdSelAzureAssign().assign_majors(major_assignment)
 
     def assign_cohorts_bulk(self, cohort_assignment):
         return AdSelAzureAssign().assign_cohorts_bulk(cohort_assignment)
@@ -43,7 +43,7 @@ class AdSel(object):
         return AdSelAzureAssign().assign_cohorts_manual(cohort_assignment)
 
     def assign_purple_gold(self, pg_assignments):
-        return AdSelAzure().assign_pugo(pg_assignments)
+        return AdSelAzureAssign().assign_pugo(pg_assignments)
 
     def assign_decisions(self, decision_assignment):
         url = "{}/assignments/departmentalDecision".format(self.API)
