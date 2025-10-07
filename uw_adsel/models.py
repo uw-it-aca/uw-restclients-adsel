@@ -345,7 +345,7 @@ class ConflictDetail(models.Model):
     adsel_id = models.IntegerField()
     req_major1_name = models.CharField(max_length=255)
     quarter_id = models.IntegerField()
-    req_major1_collegee = models.CharField(max_length=255)
+    req_major1_college = models.CharField(max_length=255)
     studentName = models.CharField(max_length=255)
     req_major2_name = models.CharField(max_length=255)
     application_num = models.IntegerField()
