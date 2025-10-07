@@ -10,7 +10,8 @@ from uw_adsel.dao import ADSEL_DAO
 from uw_adsel.adselazure_assign_dao import ADSEL_AZURE_ASSIGN_DAO
 from uw_adsel.adselazure_merge_dao import ADSEL_AZURE_MERGE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
-    Decision, AdminMajor, AdminCohort, Workspace
+    Decision, AdminMajor, AdminCohort, Workspace, MajorConflict, \
+    CohortConflict, MajorConflictDetail, CohortConflictDetail
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -629,28 +630,30 @@ class AdSelAzureMerge(AdSel):
             "toWorkspaceId": to_workspace
         }
         response = self.get_with_body(url, body)
-        return response
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        conflicts = CohortConflict.conflicts_from_response(parsed_response)
+        return conflicts
 
     def get_conflict_details_cohort(self, from_workspace, to_workspace):
         url = "/ConflictCheck/Details/Cohort"
-        response = self._get_resource(url)
         body = {
             "fromWorkspaceId": from_workspace,
             "toWorkspaceId": to_workspace
         }
         response = self.get_with_body(url, body)
-        return response
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        details = CohortConflictDetail.details_from_response(parsed_response)
+        return details
 
-    def merge_cohort(self, from_workspace, to_workspace, cohort_id, comments,
-                     username):
+    def merge_cohort(self, merge_object):
         url = "/Merge/Cohort"
-        body = {
-            "fromWorkspaceId": from_workspace,
-            "toWorkspaceId": to_workspace,
-            "cohortNbr": cohort_id,
-            "comments": comments,
-            "decisionImportUser": username
-        }
+        body = merge_object.to_json()
         response = self._post_resource(url, body)
         return response
 
@@ -660,8 +663,13 @@ class AdSelAzureMerge(AdSel):
             "fromWorkspaceId": from_workspace,
             "toWorkspaceId": to_workspace
         }
-        response = self._get_resource(url, body)
-        return response
+        response = self.get_with_body(url, body)
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        conflicts = MajorConflict.conflicts_from_response(parsed_response)
+        return conflicts
 
     def get_conflict_details_major(self, from_workspace, to_workspace):
         url = "/ConflictCheck/Details/Major"
@@ -670,17 +678,15 @@ class AdSelAzureMerge(AdSel):
             "toWorkspaceId": to_workspace
         }
         response = self.get_with_body(url, body)
-        return response
+        if response.status != 200:
+            self._log_error(url, response)
+            raise DataFailureException(url, response.status, response.data)
+        parsed_response = json.loads(response.data)
+        details = MajorConflictDetail.details_from_response(parsed_response)
+        return details
 
-    def merge_major(self, from_workspace, to_workspace,
-                    major_program_code, comments, username):
+    def merge_major(self, merge_object):
         url = "/Merge/Major"
-        body = {
-            "fromWorkspaceId": from_workspace,
-            "toWorkspaceId": to_workspace,
-            "majorProgramCode": major_program_code,
-            "comments": comments,
-            "decisionImportUser": username
-        }
+        body = merge_object.to_json()
         response = self._post_resource(url, body)
         return response

@@ -288,3 +288,202 @@ class Workspace(models.Model):
             "workspaceStatusId": self.workspace_status_id,
             "workspaceStatusDesc": self.workspace_status_desc
         }
+
+
+class Conflict(models.Model):
+    source_ws = models.IntegerField()
+    source_ws_name = models.CharField(max_length=255)
+    destination_ws = models.IntegerField()
+    destination_ws_name = models.CharField(max_length=255)
+    conflict_status = models.BooleanField()
+
+    def init_from_json(self, json_data):
+        self.source_ws = json_data.get('source_ws')
+        self.source_ws_name = json_data.get('source_ws_name')
+        self.destination_ws = json_data.get('destination_ws')
+        self.destination_ws_name = json_data.get('destination_ws_name')
+        self.conflict_status = json_data.get('conflictStatus')
+
+    @classmethod
+    def conflicts_from_response(cls, json_list):
+        return [cls().init_from_json(json_data) for json_data in json_list]
+
+
+class CohortConflict(Conflict):
+    source_cohort = models.IntegerField()
+
+    def init_from_json(self, json_data):
+        super().init_from_json(json_data)
+        self.source_cohort = json_data.get('sourceAssignedCohort')
+        return self
+
+
+class MajorConflict(Conflict):
+    source_major = models.CharField(max_length=64)
+
+    def init_from_json(self, json_data):
+        super().init_from_json(json_data)
+        self.source_major = json_data.get('majorCode')
+        return self
+
+
+class ConflictDetail(models.Model):
+    last_school_name = models.CharField(max_length=255)
+    source_ws = models.IntegerField()
+    last_school_code = models.CharField(max_length=32)
+    source_ws_name = models.CharField(max_length=255)
+    high_school_city = models.CharField(max_length=255)
+    high_school_state = models.CharField(max_length=255)
+    destination_ws = models.IntegerField()
+    high_school_FRL = models.CharField(max_length=8)
+    destination_ws_name = models.CharField(max_length=255)
+    low_family_income = models.BooleanField()
+    sdb_src_syskey = models.IntegerField()
+    first_gen = models.BooleanField()
+    application_type = models.IntegerField()
+    athlete_code = models.CharField(max_length=8)
+    adsel_id = models.IntegerField()
+    req_major1_name = models.CharField(max_length=255)
+    quarter_id = models.IntegerField()
+    req_major1_collegee = models.CharField(max_length=255)
+    studentName = models.CharField(max_length=255)
+    req_major2_name = models.CharField(max_length=255)
+    application_num = models.IntegerField()
+    req_major2_college = models.CharField(max_length=255)
+    gender = models.CharField(max_length=8)
+    permanent_state = models.CharField(max_length=32)
+    urm_desc = models.CharField(max_length=255)
+    reason_code = models.IntegerField()
+    ipeds = models.CharField(max_length=255)
+    sdb_cohort = models.IntegerField()
+    resident_group = models.CharField(max_length=255)
+    resident_category = models.CharField(max_length=255)
+    sdb_app_status = models.CharField(max_length=32)
+    any_admissions_recommendation = models.BooleanField()
+    sdb_email = models.CharField(max_length=255)
+    any_academic = models.BooleanField()
+    any_pqa = models.BooleanField()
+    high_school_gpa = models.FloatField()
+    math_level_code = models.IntegerField()
+    highest_concorded_sat_total = models.IntegerField()
+    highest_concorded_sat_reading_writing = models.IntegerField()
+    highest_concorded_sat_math = models.IntegerField()
+    assigned_major1_name = models.CharField(max_length=255)
+    adsel_assigned_major_name = models.CharField(max_length=255)
+    adsel_assigned_major_program_code = models.CharField(max_length=32)
+
+    def init_from_json(self, json):
+        self.last_school_name = json.get('lastSchoolName')
+        self.source_ws = json.get('source_ws')
+        self.last_school_code = json.get('lastSchoolCode')
+        self.source_ws_name = json.get('source_ws_name')
+        self.high_school_city = json.get('highSchoolCity')
+        self.high_school_state = json.get('highSchoolState')
+        self.destination_ws = json.get('destination_ws')
+        self.high_school_FRL = json.get('highSchoolFRL')
+        self.destination_ws_name = json.get('destination_ws_name')
+        self.low_family_income = json.get('lowFamilyIncomeInd')
+        self.sdb_src_syskey = json.get('sdbSrcSystemKey')
+        self.first_gen = json.get('firstGenerationInd')
+        self.application_type = json.get('applicationType')
+        self.athlete_code = json.get('athleteCode')
+        self.adsel_id = json.get('admissionsSelectionId')
+        self.req_major1_name = json.get('requestedMajor1Name')
+        self.quarter_id = json.get('academicQtrKeyId')
+        self.req_major1_collegee = json.get('requestedMajor1College')
+        self.studentName = json.get('studentName')
+        self.req_major2_name = json.get('requestedMajor2Name')
+        self.application_num = json.get('applicationNbr')
+        self.req_major2_college = json.get('requestedMajor2College')
+        self.gender = json.get('gender')
+        self.permanent_state = json.get('permanentState')
+        self.urm_desc = json.get('underrepresentedMinorityDesc')
+        self.reason_code = json.get('reasonCode')
+        self.ipeds = json.get('ipedsRaceEthnicityCategory')
+        self.sdb_cohort = json.get('sdbCohort')
+        self.resident_group = json.get('residentGroup')
+        self.resident_category = json.get('residentCategory')
+        self.sdb_app_status = json.get('sdbApplicationStatus')
+        self.any_admissions_recommendation \
+            = json.get('anyAdmissionsRecommendation')
+        self.sdb_email = json.get('sdbEmail')
+        self.any_academic = json.get('anyAcademic')
+        self.any_pqa = json.get('anyPQA')
+        self.high_school_gpa = json.get('highSchoolGPA')
+        self.math_level_code = json.get('mathLevelCode')
+        self.highest_concorded_sat_total = json.get('highestConcordedSATTotal')
+        self.highest_concorded_sat_reading_writing \
+            = json.get('highestConcordedSATReadingWriting')
+        self.highest_concorded_sat_math = json.get('highestConcordedSATMath')
+        self.assigned_major1_name = json.get('assignedMajor1Name')
+        self.adsel_assigned_major_name = json.get('adSelAssignedMajorName')
+        self.adsel_assigned_major_program_code \
+            = json.get('adSelAssignedMajorProgramCode')
+
+    @classmethod
+    def details_from_response(cls, json_list):
+        return [cls().init_from_json(json_data) for json_data in json_list]
+
+
+class CohortConflictDetail(ConflictDetail):
+    source_assigned_cohort = models.CharField(max_length=32)
+    destination_assigned_cohort = models.CharField(max_length=32)
+    assigned_cohort_conflict_status = models.CharField(max_length=255)
+
+    def init_from_json(self, json):
+        super().init_from_json(json)
+        self.source_assigned_cohort = json.get('sourceAssignedCohort')
+        self.destination_assigned_cohort \
+            = json.get('destinationAssignedCohort')
+        self.assigned_cohort_conflict_status \
+            = json.get('assignedCohortConflictStatus')
+        return self
+
+
+class MajorConflictDetail(ConflictDetail):
+    source_assigned_major = models.CharField(max_length=255)
+    destination_assigned_major = models.CharField(max_length=255)
+    assigned_major_conflict_status = models.CharField(max_length=255)
+
+    def init_from_json(self, json):
+        super().init_from_json(json)
+        self.source_assigned_major \
+            = json.get('sourceAdSelAssignedMajorProgramCode')
+        self.destination_assigned_major \
+            = json.get('destAdSelAssignedMajorProgramCode')
+        self.assigned_major_conflict_status \
+            = json.get('adSelAssignedMajorConflictStatus')
+        return self
+
+
+class Merge(models.Model):
+    from_ws_id = models.IntegerField()
+    to_ws_id = models.IntegerField()
+    comments = models.TextField()
+    user = models.CharField(max_length=64)
+
+    def to_json(self):
+        return {
+            'fromWorkspaceId': self.from_ws_id,
+            'toWorkspaceId': self.to_ws_id,
+            'comments': self.comments,
+            'decisionImportUser': self.user
+        }
+
+
+class CohortMerge(Merge):
+    cohort_number = models.IntegerField()
+
+    def to_json(self):
+        data = super().to_json()
+        data['cohortNbr'] = self.cohort_number
+        return data
+
+
+class MajorMerge(Merge):
+    major_code = models.CharField(max_length=32)
+
+    def to_json(self):
+        data = super().to_json()
+        data['majorProgramCode'] = self.major_code
+        return data

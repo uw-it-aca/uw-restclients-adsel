@@ -1,6 +1,6 @@
 [
   {
-    "majorCode": 1,
+    "majorCode": "0_C SCI_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -8,7 +8,7 @@
     "conflictStatus": true
   },
   {
-    "majorCode": 2,
+    "majorCode": "1_BIOL_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -16,7 +16,7 @@
     "conflictStatus": false
   },
   {
-    "majorCode": 3,
+    "majorCode": "2_BUS_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -24,7 +24,7 @@
     "conflictStatus": true
   },
   {
-    "majorCode": 4,
+    "majorCode": "3_ECON_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -32,7 +32,7 @@
     "conflictStatus": false
   },
   {
-    "majorCode": 5,
+    "majorCode": "4_ENGL_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -40,7 +40,7 @@
     "conflictStatus": true
   },
   {
-    "majorCode": 6,
+    "majorCode": "5_HIST_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -48,7 +48,7 @@
     "conflictStatus": false
   },
   {
-    "majorCode": 7,
+    "majorCode": "6_MATH_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -56,7 +56,7 @@
     "conflictStatus": true
   },
   {
-    "majorCode": 8,
+    "majorCode": "7_PHYS_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -64,7 +64,7 @@
     "conflictStatus": false
   },
   {
-    "majorCode": 9,
+    "majorCode": "8_PSYC_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,
@@ -72,7 +72,7 @@
     "conflictStatus": true
   },
   {
-    "majorCode": 10,
+    "majorCode": "9_SOC_00_1_5",
     "source_ws": 1,
     "source_ws_name": "WS One",
     "destination_ws": 2,

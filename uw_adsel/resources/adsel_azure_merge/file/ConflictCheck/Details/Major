@@ -42,7 +42,7 @@
     "highestConcordedSATMath": 750,
     "sourceAdSelAssignedMajorProgramCode": "ASTRO",
     "destAdSelAssignedMajorProgramCode": "BIO",
-    "adSelAssignedMajorConflictStatus": "Conflicting Reason",
+    "adSelAssignedMajorConflictStatus": "No Cohort",
     "assignedMajor1Name": "Math",
     "adSelAssignedMajorName": "Chemistry",
     "adSelAssignedMajorProgramCode": "CJE"
@@ -334,5 +334,5 @@
     "assignedMajor1Name": "Math",
     "adSelAssignedMajorName": "Chemistry",
     "adSelAssignedMajorProgramCode": "CJE"
-  }        
+  }
 ]
