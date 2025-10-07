@@ -1,0 +1,82 @@
+[
+  {
+    "majorCode": 1,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": true
+  },
+  {
+    "majorCode": 2,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": false
+  },
+  {
+    "majorCode": 3,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": true
+  },
+  {
+    "majorCode": 4,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": false
+  },
+  {
+    "majorCode": 5,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": true
+  },
+  {
+    "majorCode": 6,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": false
+  },
+  {
+    "majorCode": 7,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": true
+  },
+  {
+    "majorCode": 8,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": false
+  },
+  {
+    "majorCode": 9,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": true
+  },
+  {
+    "majorCode": 10,
+    "source_ws": 1,
+    "source_ws_name": "WS One",
+    "destination_ws": 2,
+    "destination_ws_name": "WS Two",
+    "conflictStatus": false
+  }
+]
