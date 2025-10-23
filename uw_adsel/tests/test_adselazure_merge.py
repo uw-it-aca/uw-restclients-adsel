@@ -28,6 +28,16 @@ class AdselTest(TestCase):
         self.assertEqual(details[0].assigned_cohort_conflict_status,
                          "Conflicting Reason")
 
+    def test_cohort_conflict_details_csv(self):
+        details = self.adsel.get_conflict_details_cohort(1, 2)
+        csv_data = details[0].get_csv_line()
+        self.assertTrue(csv_data.startswith(details[0].last_school_name))
+        self.assertTrue(
+            csv_data.endswith(details[0].assigned_cohort_conflict_status))
+        header = details[0].get_header_line()
+        self.assertTrue(header.startswith("last_school_name"))
+        self.assertTrue(header.endswith("assigned_cohort_conflict_status"))
+
     def test_major_conflict(self):
         conflicts = self.adsel.check_conflict_major(1, 2)
         self.assertEqual(len(conflicts), 10)
@@ -38,6 +48,16 @@ class AdselTest(TestCase):
         self.assertEqual(conflicts[0].source_major, '0_C SCI_00_1_5')
         self.assertEqual(conflicts[0].conflict_status, True)
         self.assertEqual(conflicts[1].conflict_status, False)
+
+    def test_major_conflict_details_csv(self):
+        details = self.adsel.get_conflict_details_major(1, 2)
+        csv_data = details[0].get_csv_line()
+        self.assertTrue(csv_data.startswith(details[0].last_school_name))
+        self.assertTrue(csv_data.endswith(
+            details[0].assigned_major_conflict_status))
+        header = details[0].get_header_line()
+        self.assertTrue(header.startswith("last_school_name"))
+        self.assertTrue(header.endswith("assigned_major_conflict_status"))
 
     def test_major_conflict_details(self):
         details = self.adsel.get_conflict_details_major(1, 2)
