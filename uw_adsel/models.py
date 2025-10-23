@@ -430,25 +430,26 @@ class ConflictDetail(models.Model):
 
     def field_names(self):
         field_names = [
-            "last_school_name", "source_ws", "last_school_code",
-            "source_ws_name",
-            "high_school_city", "high_school_state", "destination_ws",
-            "high_school_FRL", "destination_ws_name", "low_family_income",
-            "sdb_src_syskey", "first_gen", "application_type", "athlete_code",
-            "adsel_id", "req_major1_name", "quarter_id", "req_major1_college",
-            "studentName", "req_major2_name", "application_num",
-            "req_major2_college",
+            "adsel_id", "sdb_src_syskey", "application_num",
+            "studentName", "quarter_id", "application_type",
+            "source_ws", "source_ws_name", "destination_ws",
+            "destination_ws_name", "sdb_cohort", "sdb_app_status",
+            "last_school_name", "last_school_code",
+            "high_school_city", "high_school_state",
+            "high_school_FRL",  "low_family_income",
+            "first_gen",  "athlete_code",
+            "req_major1_name", "req_major1_college",
+            "req_major2_name", "req_major2_college",
+            "assigned_major1_name", "adsel_assigned_major_name",
+            "adsel_assigned_major_program_code"
             "gender", "permanent_state", "urm_desc", "reason_code", "ipeds",
-            "sdb_cohort", "resident_group", "resident_category",
-            "sdb_app_status",
+            "resident_group", "resident_category",
             "any_admissions_recommendation", "sdb_email", "any_academic",
             "any_pqa",
             "high_school_gpa", "math_level_code",
             "highest_concorded_sat_total",
             "highest_concorded_sat_reading_writing",
             "highest_concorded_sat_math",
-            "assigned_major1_name", "adsel_assigned_major_name",
-            "adsel_assigned_major_program_code"
         ]
         return field_names
 
