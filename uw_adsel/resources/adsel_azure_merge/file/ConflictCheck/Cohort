@@ -76,6 +76,7 @@
     "source_ws_applicationCount": 60,
     "destination_ws": 2,
     "destination_ws_name": "WS Two",
+    "dest_ws_applicationCount": 0,
     "conflictStatus": false
   },
   {
