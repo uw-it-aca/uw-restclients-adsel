@@ -293,8 +293,10 @@ class Workspace(models.Model):
 class Conflict(models.Model):
     source_ws = models.IntegerField()
     source_ws_name = models.CharField(max_length=255)
+    source_assigned_count = models.IntegerField()
     destination_ws = models.IntegerField()
     destination_ws_name = models.CharField(max_length=255)
+    destination_assigned_count = models.IntegerField()
     conflict_status = models.BooleanField()
 
     def init_from_json(self, json_data):
@@ -303,6 +305,10 @@ class Conflict(models.Model):
         self.destination_ws = json_data.get('destination_ws')
         self.destination_ws_name = json_data.get('destination_ws_name')
         self.conflict_status = json_data.get('conflictStatus')
+        self.source_assigned_count = (
+            json_data.get('source_ws_applicationCount'))
+        self.destination_assigned_count = json_data.get(
+            'dest_ws_applicationCount')
 
     @classmethod
     def conflicts_from_response(cls, json_list):

@@ -19,6 +19,8 @@ class AdselTest(TestCase):
         self.assertEqual(conflicts[0].source_cohort, 1)
         self.assertEqual(conflicts[0].conflict_status, True)
         self.assertEqual(conflicts[1].conflict_status, False)
+        self.assertEqual(conflicts[0].source_assigned_count, 150)
+        self.assertEqual(conflicts[0].destination_assigned_count, 200)
 
     def test_cohort_conflict_details(self):
         details = self.adsel.get_conflict_details_cohort(1, 2)
@@ -48,6 +50,8 @@ class AdselTest(TestCase):
         self.assertEqual(conflicts[0].source_major, '0_C SCI_00_1_5')
         self.assertEqual(conflicts[0].conflict_status, True)
         self.assertEqual(conflicts[1].conflict_status, False)
+        self.assertEqual(conflicts[0].source_assigned_count, 40)
+        self.assertEqual(conflicts[0].destination_assigned_count, 50)
 
     def test_major_conflict_details_csv(self):
         details = self.adsel.get_conflict_details_major(1, 2)
