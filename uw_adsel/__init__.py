@@ -1,9 +1,11 @@
 """
 This is the interface for interacting with the AdSel Web Service.
 """
-
+import csv
 import json
 import logging
+import string
+import io
 from restclients_core.exceptions import DataFailureException
 from restclients_core.dao import MockDAO
 from uw_adsel.dao import ADSEL_DAO
@@ -11,7 +13,7 @@ from uw_adsel.adselazure_assign_dao import ADSEL_AZURE_ASSIGN_DAO
 from uw_adsel.adselazure_merge_dao import ADSEL_AZURE_MERGE_DAO
 from uw_adsel.models import Major, Cohort, Quarter, Activity, Application, \
     Decision, AdminMajor, AdminCohort, Workspace, MajorConflict, \
-    CohortConflict, MajorConflictDetail, CohortConflictDetail
+    CohortConflict
 import dateutil.parser
 from datetime import datetime
 import urllib.parse
@@ -648,8 +650,23 @@ class AdSelAzureMerge(AdSel):
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
         parsed_response = json.loads(response.data)
-        details = CohortConflictDetail.details_from_response(parsed_response)
-        return details
+        return self._get_conflict_csv(parsed_response)
+
+    @staticmethod
+    def _get_conflict_csv(conflict_json):
+        csv_output = io.StringIO()
+
+        if conflict_json:
+            trimmed = [
+                {k: v.strip() if isinstance(v, str)
+                    else v for k, v in row.items()}
+                for row in conflict_json
+            ]
+            writer = csv.DictWriter(csv_output,
+                                    fieldnames=trimmed[0].keys())
+            writer.writeheader()
+            writer.writerows(trimmed)
+        return csv_output.getvalue()
 
     def merge_cohort(self, merge_object):
         url = "/Merge/Cohort"
@@ -682,8 +699,7 @@ class AdSelAzureMerge(AdSel):
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
         parsed_response = json.loads(response.data)
-        details = MajorConflictDetail.details_from_response(parsed_response)
-        return details
+        return self._get_conflict_csv(parsed_response)
 
     def merge_major(self, merge_object):
         url = "/Merge/Major"
