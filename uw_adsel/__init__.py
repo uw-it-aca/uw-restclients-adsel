@@ -685,7 +685,8 @@ class AdSelAzureMerge(AdSel):
             self._log_error(url, response)
             raise DataFailureException(url, response.status, response.data)
         parsed_response = json.loads(response.data)
-        return self._get_conflict_csv(parsed_response)
+        conflicts = MajorConflict.conflicts_from_response(parsed_response)
+        return conflicts
 
     def get_conflict_details_major(self, from_workspace, to_workspace):
         url = "/ConflictCheck/Details/Major"
