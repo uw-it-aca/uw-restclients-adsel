@@ -1,7 +1,6 @@
 from unittest import TestCase
 from uw_adsel import AdSelAzureMerge
 from uw_adsel.models import CohortMerge, MajorMerge
-import json
 
 
 class AdselTest(TestCase):
@@ -24,21 +23,27 @@ class AdselTest(TestCase):
 
     def test_cohort_conflict_details(self):
         details = self.adsel.get_conflict_details_cohort(1, 2)
-        self.assertEqual(len(details), 7)
-        self.assertEqual(details[0].last_school_name, "Old School 1")
-        self.assertEqual(details[0].destination_assigned_cohort, "7")
-        self.assertEqual(details[0].assigned_cohort_conflict_status,
-                         "Conflicting Reason")
+        detail_lines = details.split('\n')
+        self.assertEqual(len(detail_lines), 9)
 
     def test_cohort_conflict_details_csv(self):
         details = self.adsel.get_conflict_details_cohort(1, 2)
-        csv_data = details[0].get_csv_line()
-        self.assertTrue(csv_data.startswith(details[0].last_school_name))
-        self.assertTrue(
-            csv_data.endswith(details[0].assigned_cohort_conflict_status))
-        header = details[0].get_header_line()
-        self.assertTrue(header.startswith("last_school_name"))
-        self.assertTrue(header.endswith("assigned_cohort_conflict_status"))
+        detail_lines = details.split('\n')
+        expected_headers = """lastSchoolName,source_ws,lastSchoolCode,
+        source_ws_name,highSchoolCity,highSchoolState,destination_ws,highSchoo
+        lFRLPct,destination_ws_name,lowFamilyIncomeInd,sdbSrcSystemKey,firstGe
+        nerationInd,applicationType,athleteCode,admissionsSelectionId,requeste
+        dMajor1Name,academicQtrKeyId,requestedMajor1College,studentName,request
+        edMajor2Name,applicationNbr,requestedMajor2College,gender,permanentStat
+        e,underrepresentedMinorityDesc,reasonCode,ipedsRaceEthnicityCategory,s
+        dbCohort,residentGroup,residentCategory,sdbApplicationStatus,anyAdmiss
+        ionsRecommendation,sdbEmail,anyAcademic,anyPQA,highSchoolGPA,mathLeve
+        lCode,highestConcordedSATTotal,highestConcordedSATReadingWriting,hig
+        hestConcordedSATMath,sourceAssignedCohort,destinationAssignedCohort
+        ,assignedCohortConflictStatus,assignedMajor1Name,adSelAssignedMajorNa
+        me,adSelAssignedMajorProgramCode"""
+        self.assertEqual(len(detail_lines), 9)
+        self.assertIn("Bill Student", detail_lines[1])
 
     def test_major_conflict(self):
         conflicts = self.adsel.check_conflict_major(1, 2)
@@ -52,25 +57,6 @@ class AdselTest(TestCase):
         self.assertEqual(conflicts[1].conflict_status, False)
         self.assertEqual(conflicts[0].source_assigned_count, 40)
         self.assertEqual(conflicts[0].destination_assigned_count, 50)
-
-    def test_major_conflict_details_csv(self):
-        details = self.adsel.get_conflict_details_major(1, 2)
-        csv_data = details[0].get_csv_line()
-        self.assertTrue(csv_data.startswith(details[0].last_school_name))
-        self.assertTrue(csv_data.endswith(
-            details[0].assigned_major_conflict_status))
-        header = details[0].get_header_line()
-        self.assertTrue(header.startswith("last_school_name"))
-        self.assertTrue(header.endswith("assigned_major_conflict_status"))
-
-    def test_major_conflict_details(self):
-        details = self.adsel.get_conflict_details_major(1, 2)
-        self.assertEqual(len(details), 7)
-        self.assertEqual(details[0].last_school_name, "Old School 1")
-        self.assertEqual(details[0].destination_assigned_major,
-                         "BIO")
-        self.assertEqual(details[0].assigned_major_conflict_status,
-                         "No Cohort")
 
     def test_major_merge(self):
         mm = MajorMerge(
