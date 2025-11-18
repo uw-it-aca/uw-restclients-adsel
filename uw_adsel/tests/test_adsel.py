@@ -88,6 +88,8 @@ class AdselTest(TestCase):
         applications = self.adsel.get_applications_by_qtr_syskey(0, 123, 1)
         self.assertEqual(len(applications), 4)
         self.assertEqual(applications[0].adsel_id, 1)
+        self.assertEqual(applications[0].sdb_app_status, 457)
+        self.assertEqual(applications[1].sdb_app_status, 298)
 
     def test_get_applications_by_syskey_list(self):
         # No Match
@@ -135,6 +137,8 @@ class AdselTest(TestCase):
                                                                        1)
         self.assertEqual(len(applications), 4)
         self.assertEqual(applications[0].application_type, "Transfer")
+        self.assertEqual(applications[0].sdb_app_status, 111)
+        self.assertEqual(applications[1].sdb_app_status, 33)
 
     def test_post(self):
         a1 = Application()

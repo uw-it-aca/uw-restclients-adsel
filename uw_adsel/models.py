@@ -73,12 +73,14 @@ class Application(models.Model):
     assigned_major = models.CharField(max_length=32)
     major_program_code = models.CharField(max_length=255)
     application_type = models.CharField(max_length=255)
+    sdb_app_status = models.IntegerField()
 
     def json_data(self):
         return {'admissionSelectionId': int(self.adsel_id),
                 'applicationNbr': self.application_number,
                 'systemKey': int(self.system_key),
-                'applicationType': self.application_type}
+                'applicationType': self.application_type,
+                'sdbApplicationStatus': self.sdb_app_status}
 
     def major_assign_json_data(self):
         return {'AdmissionSelectionId': int(self.adsel_id),
