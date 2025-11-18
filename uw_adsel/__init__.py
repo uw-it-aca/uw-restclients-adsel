@@ -161,11 +161,11 @@ class AdSel(object):
             application.assigned_major = app['assignedMajor']
             application.major_program_code = app['majorProgramCode']
             application.application_type = app['applicationType']
-            applications.append(application)
             try:
                 application.sdb_app_status = app['sdbApplicationStatus']
             except KeyError:
                 pass
+            applications.append(application)
 
         return applications
 
